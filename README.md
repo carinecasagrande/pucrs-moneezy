@@ -3,11 +3,14 @@ Desenvolvimento da plataforma Moneezy para o TCC da Pós-Graduação em Desenvol
 
 ## Diagramas
 Arquitetura do Sistema
+
 ![Arquitetura do Sistema](https://raw.githubusercontent.com/carinecasagrande/pucrs-moneezy/main/Docs/Diagramas/Arquitetura%20do%20Sistema.png)
 
 ## Fluxogramas
 Autenticação do Usuário
+
 ![Fluxo de Autenticação do Usuário](https://raw.githubusercontent.com/carinecasagrande/pucrs-moneezy/main/Docs/Fluxogramas/Autentica%C3%A7%C3%A3o%20de%20usu%C3%A1rio.png)
 
 Gerenciar Categorias
+
 ![Fluxo de Autenticação do Usuário](https://raw.githubusercontent.com/carinecasagrande/pucrs-moneezy/main/Docs/Fluxogramas/Gerenciar%20categorias.png)
