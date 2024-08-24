@@ -13,3 +13,4 @@ Desenvolvimento da plataforma Moneezy para o TCC da Pós-Graduação em Desenvol
 
 ## Layout
 - Fontes: [Billy Money](https://www.dafont.com/pt/billy-money.font), [Montserrat](https://fonts.google.com/specimen/Montserrat)
+- [Vetor](https://br.freepik.com/vetores-gratis/conceito-de-ilustracao-de-financas_6193734.htm)
