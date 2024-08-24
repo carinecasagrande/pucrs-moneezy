@@ -12,4 +12,4 @@ Desenvolvimento da plataforma Moneezy para o TCC da Pós-Graduação em Desenvol
 - [Gerar Relatório](https://github.com/carinecasagrande/pucrs-moneezy/blob/main/Docs/Fluxogramas/Gerar%20relat%C3%B3rio.png)
 
 ## Layout
-- Fonte: [Billy Money](https://www.dafont.com/pt/billy-money.font)
+- Fontes: [Billy Money](https://www.dafont.com/pt/billy-money.font), [Montserrat](https://fonts.google.com/specimen/Montserrat)
