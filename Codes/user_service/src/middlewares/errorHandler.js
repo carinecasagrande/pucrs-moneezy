@@ -1,3 +1,6 @@
+const i18n = require("i18n");
+const { CustomError } = require("../errors/customError");
+
 /**
  * Handles error output.
  */

@@ -8,7 +8,6 @@ const config = require("./config/config");
 // Settings
 const app = express();
 app.use(express.json());
-app.use(errorHandler);
 app.use(i18n.init);
 app.use((req, res, next) => {
   const lang = req.headers["accept-language"];
@@ -20,8 +19,18 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Routes and Errors
 app.use("/api/users", userRoutes);
+
+app.use((req, res, next) => {
+  res.status(404).json({
+    code: 404,
+    message: "Resource not found",
+    result: "error",
+  });
+});
+
+app.use(errorHandler);
 
 // Synchronizes models with the database
 sequelize

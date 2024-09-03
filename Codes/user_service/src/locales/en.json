@@ -27,5 +27,6 @@
   "default_error": "An error occurred while performing this action. Please try again later.",
   "token_not_provided": "Token not provided.",
   "token_expired": "Token expired or revoked.",
-  "token_invalid": "Invalid token."
+  "token_invalid": "Invalid token.",
+  "update_no_changes": "No changes found."
 }
