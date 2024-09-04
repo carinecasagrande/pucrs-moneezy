@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 const { JwtToken } = require("../models");
-const { CustomError } = require("../errors/customError");
 
 /**
  * Generates the user's access token
@@ -35,27 +34,6 @@ const generateAccessToken = async (req, user, revokeOthers = false) => {
 };
 
 /**
- * Verify the access token.
- */
-const verifyAccessToken = async (token) => {
-  try {
-    const tokenExists = await JwtToken.findOne({
-      where: {
-        token,
-        revoked: false,
-      },
-    });
-    if (!tokenExists) {
-      throw new CustomError("token_expired", 400);
-    }
-
-    return jwt.verify(token, config.jwt.secret);
-  } catch (error) {
-    throw new CustomError("token_invalid", 401);
-  }
-};
-
-/**
  * Revokes a token.
  */
 const revokeTokens = async (user_id) => {
@@ -71,6 +49,5 @@ const revokeTokens = async (user_id) => {
 
 module.exports = {
   generateAccessToken,
-  verifyAccessToken,
   revokeTokens,
 };

@@ -15,6 +15,7 @@ const config = require("../config/config");
 const i18n = require("i18n");
 const { Op } = require("sequelize");
 const validator = require("validator");
+const { revokeTokens } = require("./authService");
 
 /**
  * Handles user account creation.
@@ -201,7 +202,7 @@ const update = async (user_id, username, email, password, password_confirmation)
   validateUpdate(updateData);
 
   if (updateData.email) {
-    checkIfEmailAlreadyRegistered(updateData.email, user.user_id);
+    await checkIfEmailAlreadyRegistered(updateData.email, user.user_id);
   }
 
   await User.update(updateData, {

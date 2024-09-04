@@ -1,6 +1,7 @@
 const { CustomError } = require("../errors/customError");
-const { verifyAccessToken } = require("../services/authService");
 const i18n = require("i18n");
+const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 
 /**
  * Authentication Middleware
@@ -13,10 +14,13 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
-    const decoded = await verifyAccessToken(token);
-    req.user = decoded;
-    next();
+    jwt.verify(token, config.jwt.secret, (err, decoded) => {
+      if (err) {
+        throw new CustomError("token_invalid", 401);
+      }
+      req.user = decoded;
+      next();
+    });
   } catch (error) {
     var code = 500;
     var message = "default_error";

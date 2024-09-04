@@ -42,7 +42,7 @@ const loadEmailTemplate = (templateName, locale, variables) => {
 
       let html = data;
 
-      // Substituir placeholders no HTML com variáveis
+      // Replace placeholders in HTML with variables
       for (const [key, value] of Object.entries(variables)) {
         html = html.replace(new RegExp(`{{${key}}}`, "g"), value);
       }

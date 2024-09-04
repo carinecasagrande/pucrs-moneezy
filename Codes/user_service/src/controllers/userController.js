@@ -237,7 +237,6 @@ const actionUpdate = async (req, res) => {
       result: "success",
     });
   } catch (error) {
-    console.log(error.message);
     var code = 500;
     var message = "update_error";
 

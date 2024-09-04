@@ -28,5 +28,7 @@
   "token_not_provided": "Token não informado",
   "token_expired": "Token expirado ou revogado.",
   "token_invalid": "Token inválido.",
-  "update_no_changes": "Nenhuma alteração encontrada."
+  "update_no_changes": "Nenhuma alteração encontrada.",
+  "resource_not_found": "Recurso não encontrado.",
+  "request_not_permitted": "Requisição não permitida."
 }

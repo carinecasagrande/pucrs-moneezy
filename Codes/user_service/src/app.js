@@ -4,6 +4,7 @@ const { sequelize } = require("./models");
 const userRoutes = require("./routes/userRoutes");
 const errorHandler = require("./middlewares/errorHandler");
 const config = require("./config/config");
+const { CustomError } = require("./errors/customError");
 
 // Settings
 const app = express();
@@ -19,15 +20,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  if (req.hostname != config.hostname.api_gateway) {
+    throw new CustomError("request_not_permitted", 401);
+  }
+  next();
+});
+
 // Routes and Errors
-app.use("/api/users", userRoutes);
+app.use("/api", userRoutes);
 
 app.use((req, res, next) => {
-  res.status(404).json({
-    code: 404,
-    message: "Resource not found",
-    result: "error",
-  });
+  throw new CustomError("resource_not_found", 404);
 });
 
 app.use(errorHandler);
