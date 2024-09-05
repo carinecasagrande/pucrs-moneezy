@@ -125,27 +125,44 @@ const changePassword = async (tokenInfo, password, password_confirmation) => {
       },
     }
   );
+
+  await PasswordReset.update(
+    { expired_by_use: true },
+    {
+      where: {
+        reset_id: tokenInfo.reset_id,
+      },
+    }
+  );
 };
 
 /**
  * Checks the password reset token.
  */
-const verifyChangePasswordToken = async (req) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    throw new CustomError("token_not_provided", 400);
+const verifyChangePasswordToken = async (req, token = null) => {
+  if (token == null) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      throw new CustomError("token_not_provided", 400);
+    }
+
+    token = authHeader.split(" ")[1];
   }
 
-  const token = authHeader.split(" ")[1];
+  if (!token || validator.isEmpty(token.trim())) {
+    throw new CustomError("token_not_provided", 400);
+  }
 
   const passwordResetInfo = await PasswordReset.findOne({
     where: {
       reset_token: token,
+      [Op.or]: [{ expired_by_use: null }, { expired_by_use: false }],
       expires_at: {
         [Op.gt]: new Date(),
       },
     },
   });
+
   if (!passwordResetInfo) {
     throw new CustomError("token_expired");
   }

@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const i18n = require("./config/i18n");
 const errorHandler = require("./middlewares/errorHandler");
 const routes = require("./routes");
@@ -7,7 +8,9 @@ const { CustomError } = require("./errors/customError");
 
 // Settings
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 app.use((req, res, next) => {
   const lang = req.headers["accept-language"];
   if (lang && i18n.getLocales().includes(lang.split(",")[0])) {

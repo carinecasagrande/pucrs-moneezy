@@ -1,5 +1,4 @@
 const i18n = require("i18n");
-const { CustomError } = require("../errors/customError");
 const {
   signup,
   login,
@@ -12,6 +11,7 @@ const {
 } = require("../services/userService");
 const { saveLog } = require("../services/logService");
 const { generateAccessToken } = require("../services/authService");
+const errorHandler = require("../middlewares/errorHandler");
 
 /**
  * Handles user account creation.
@@ -29,20 +29,8 @@ const actionSignup = async (req, res) => {
       message: i18n.__("signup_success"),
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "signup_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "signup_error");
   }
 };
 
@@ -64,20 +52,8 @@ const actionLogin = async (req, res) => {
       token: accessToken,
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "login_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "login_error");
   }
 };
 
@@ -97,20 +73,24 @@ const actionRequestNewPassword = async (req, res) => {
       message: i18n.__("requestNewPassword_success"),
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "requestNewPassword_error";
+  } catch (err) {
+    errorHandler(err, req, res, null, "requestNewPassword_error");
+  }
+};
 
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
+const actionValidatePasswordResetToken = async (req, res) => {
+  try {
+    const { token } = req.body;
 
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
+    await verifyChangePasswordToken(req, token);
+
+    res.status(200).json({
+      code: 200,
+      message: i18n.__("validatePasswordResetToken_success"),
+      result: "success",
     });
+  } catch (err) {
+    errorHandler(err, req, res, null, "validatePasswordResetToken_error");
   }
 };
 
@@ -132,20 +112,8 @@ const actionChangePassword = async (req, res) => {
       message: i18n.__("changePassword_success"),
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "changePassword_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "changePassword_error");
   }
 };
 
@@ -161,20 +129,8 @@ const actionDelete = async (req, res) => {
       message: i18n.__("deleteAccount_success"),
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "deleteAccount_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "deleteAccount_error");
   }
 };
 
@@ -193,20 +149,8 @@ const actionLogout = async (req, res) => {
       message: i18n.__("logout_success"),
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "logout_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "logout_error");
   }
 };
 
@@ -236,20 +180,8 @@ const actionUpdate = async (req, res) => {
       token: accessToken,
       result: "success",
     });
-  } catch (error) {
-    var code = 500;
-    var message = "update_error";
-
-    if (error instanceof CustomError) {
-      code = error.statusCode;
-      message = error.message;
-    }
-
-    res.status(code).json({
-      code: code,
-      message: i18n.__(message),
-      result: "error",
-    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "update_error");
   }
 };
 
@@ -257,6 +189,7 @@ module.exports = {
   actionSignup,
   actionLogin,
   actionRequestNewPassword,
+  actionValidatePasswordResetToken,
   actionChangePassword,
   actionDelete,
   actionLogout,

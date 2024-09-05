@@ -4,9 +4,8 @@ const { CustomError } = require("../errors/customError");
 /**
  * Handles error output.
  */
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res, next, message = "default_error") {
   var code = 500;
-  var message = "default_error";
 
   if (err instanceof CustomError) {
     code = err.statusCode;

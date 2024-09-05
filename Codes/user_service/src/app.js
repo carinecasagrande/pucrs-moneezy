@@ -8,6 +8,7 @@ const { CustomError } = require("./errors/customError");
 
 // Settings
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(i18n.init);
 app.use((req, res, next) => {

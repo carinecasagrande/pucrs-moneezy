@@ -3,8 +3,8 @@
   "signup_error": "An error occurred while creating the account. Please try again later.",
   "login_success": "Login successful.",
   "login_error": "An error occurred while logging in. Please try again later.",
-  "requestNewPassword_success": "An email has been sent with instructions to reset your password.",
-  "requestNewPassword_error": "An error occurred while requesting a password reset. Please try again later.",
+  "requestNewPassword_success": "An email has been sent with instructions for resetting your password.",
+  "requestNewPassword_error": "An error occurred while requesting the password reset. Please try again later.",
   "changePassword_success": "Password successfully changed.",
   "changePassword_error": "An error occurred while changing the password. Please try again later.",
   "deleteAccount_success": "Account successfully deleted.",
@@ -17,10 +17,10 @@
   "email_required": "Email is required.",
   "email_invalid": "Invalid email.",
   "password_required": "Password is required.",
-  "email_already_registered": "Email already registered.",
+  "email_already_registered": "Email is already registered.",
   "user_not_found": "User not found.",
   "password_incorrect": "Incorrect password.",
-  "requestNewPassword_subject": "Password reset request.",
+  "requestNewPassword_subject": "Password Reset Request.",
   "email_error": "An error occurred while sending the email. Please try again later.",
   "password_confirmation_required": "Password confirmation is required.",
   "password_confirmation_diff": "Passwords do not match.",
@@ -30,5 +30,7 @@
   "token_invalid": "Invalid token.",
   "update_no_changes": "No changes found.",
   "resource_not_found": "Resource not found.",
-  "request_not_permitted": "Request not permitted."
+  "request_not_permitted": "Request not permitted.",
+  "validatePasswordResetToken_success": "Valid token.",
+  "validatePasswordResetToken_error": "An error occurred while validating the token. Please try again later."
 }

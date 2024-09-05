@@ -49,6 +49,26 @@ router.post("/requestNewPassword", async (req, res) => {
   }
 });
 
+// Validates Password Reset Token
+router.post("/validatePasswordResetToken", async (req, res) => {
+  try {
+    const response = await userService.post(
+      "/validatePasswordResetToken",
+      req.body,
+      {
+        headers: {
+          "Accept-Language": i18n.getLocale(),
+          Authorization: req.headers["authorization"],
+        },
+      }
+    );
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    res.status(error.status).json(error.response.data);
+  }
+});
+
 // Password changes for users who have requested a reset
 router.patch("/changePassword", async (req, res) => {
   try {

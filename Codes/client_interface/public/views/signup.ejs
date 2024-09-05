@@ -1,0 +1,57 @@
+<main class="content">
+  <div class="content-left"><%- include('../partials/vector') %></div>
+  <form id="form-signup" class="content-right">
+    <%- include('../partials/logo') %>
+    <div>
+      <label for="form-signup[username]"><%- page.i18n.username_field %></label>
+      <input
+        type="text"
+        id="form-signup[username]"
+        name="username"
+        class="form-control"
+        autocomplete="name"
+      />
+    </div>
+    <div>
+      <label for="form-signup[email]"><%- page.i18n.email_field %></label>
+      <input
+        type="text"
+        id="form-signup[email]"
+        name="email"
+        class="form-control"
+        autocomplete="username"
+      />
+    </div>
+    <div>
+      <div class="field-password-label">
+        <label for="form-signup[password]"><%- page.i18n.password_field %></label>
+      </div>
+      <div class="field-password">
+        <input
+          type="password"
+          id="form-signup[password]"
+          name="password"
+          class="form-control"
+          autocomplete="current-password"
+        />
+        <button
+          type="button"
+          tabindex="0"
+          class="sap-icons btn-see-password"
+          data-id="#form-signup\[password\]"
+        >
+          &#xe1e9;
+        </button>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-brand-secondary w-100" id="btn-signup">
+        <%- page.i18n.signup_button %>
+      </button>
+      <p class="mb-0 mt-1 text-center">
+        <%- page.i18n.login_text %>
+        <a href="/"><%- page.i18n.login_link %></a>
+      </p>
+    </div>
+  </form>
+</main>

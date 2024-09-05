@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="<%- page.config.locale %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+    <title><%= page.config.title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <% for(var i in page.css){ %>
+    <link rel="stylesheet" href="<%- page.css[i] %>" />
+    <% } %>
+  </head>
+
+  <nav class="navbar bg-white border-bottom p-3">
+    <div class="container-fluid">
+      <div style="width: 100px"><%- include('../partials/logo') %></div>
+      <div>teste</div>
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="text-end me-2">
+          <p class="mb-0 text-muted small"><%-page.i18n_default.welcome_text%></p>
+          <p class="mb-0 text-bold"><%- page.config.user.username %></p>
+        </div>
+        <div class="btn-group">
+          <button
+            type="button"
+            class="btn btn-dropdown dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ></button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="/categories"
+                ><%-page.i18n_default.categories%></a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/account"
+                ><%-page.i18n_default.account%></a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button type="button" id="btn-logout" class="dropdown-item"
+                ><%-page.i18n_default.logout%></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <body>
+    <%- body %>
+  </body>
+
+  <script>
+    const $i18n = <%-JSON.stringify(page.i18n)%>;
+    const $i18n_default = <%-JSON.stringify(page.i18n_default)%>;
+    const $config = <%- JSON.stringify(page.config) %>;
+  </script>
+  <% for(var i in page.js){ %>
+  <script src="<%- page.js[i] %>"></script>
+  <% } %>
+</html>

@@ -1,0 +1,105 @@
+@font-face {
+  font-family: "SAP-icons";
+  src: url("/fonts/SAP-icons.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: #fbfbfb;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.img {
+  max-width: 100%;
+}
+
+.sap-icons {
+  font-family: "SAP-icons";
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.form-control {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-control:focus {
+  border-color: #caced1;
+}
+
+.btn-brand-secondary {
+  background-color: #f46664;
+  border-color: #f46664;
+  color: #fff;
+  transition: 0.2s;
+}
+
+.btn-brand-secondary:hover,
+.btn-brand-secondary:active,
+.btn-brand-secondary:focus-visible {
+  transition: 0.2s;
+  background-color: #e15452 !important;
+  border-color: #e15452 !important;
+  color: #fff !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #008773;
+}
+
+a {
+  text-decoration: none;
+  color: #008773;
+  transition: 0.2s;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.field-password {
+  position: relative;
+}
+
+.btn-see-password {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  color: #4e4e4e;
+}
+
+input[type="password"] {
+  padding-right: 3rem;
+}
+
+#toast-container > div {
+  opacity: 1;
+  box-shadow: none !important;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.btn-dropdown {
+  border: none !important
+  ;
+}

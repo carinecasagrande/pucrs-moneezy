@@ -7,6 +7,10 @@ const authMiddleware = require("../middlewares/authMiddleware");
 router.post("/signup", userController.actionSignup);
 router.post("/login", userController.actionLogin);
 router.post("/requestNewPassword", userController.actionRequestNewPassword);
+router.post(
+  "/validatePasswordResetToken",
+  userController.actionValidatePasswordResetToken
+);
 router.patch("/changePassword", userController.actionChangePassword);
 
 // Private routes

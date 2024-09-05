@@ -21,6 +21,9 @@ module.exports = (sequelize) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
+      expired_by_use: {
+        type: DataTypes.BOOLEAN,
+      },
       created_at: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

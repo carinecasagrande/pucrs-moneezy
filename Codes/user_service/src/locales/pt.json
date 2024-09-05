@@ -30,5 +30,7 @@
   "token_invalid": "Token inválido.",
   "update_no_changes": "Nenhuma alteração encontrada.",
   "resource_not_found": "Recurso não encontrado.",
-  "request_not_permitted": "Requisição não permitida."
+  "request_not_permitted": "Requisição não permitida.",
+  "validatePasswordResetToken_success": "Token válido.",
+  "validatePasswordResetToken_error": "Ocorreu um erro ao validar o token. Tente novamente mais tarde."
 }
