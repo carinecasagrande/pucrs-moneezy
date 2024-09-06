@@ -28,6 +28,10 @@ const getPageConfig = (user = null) => {
       swal_cancel_button: i18n.__("swal_cancel_button"),
       swal_logout_button: i18n.__("swal_logout_button"),
       swal_logout_text: i18n.__("swal_logout_text"),
+      dashboard: i18n.__("dashboard"),
+      transactions: i18n.__("transactions"),
+      budget: i18n.__("budget"),
+      report: i18n.__("report"),
     },
     config: {
       locale: i18n.getLocale(),

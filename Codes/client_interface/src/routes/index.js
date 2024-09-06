@@ -5,6 +5,7 @@ const config = require("../config/config");
 const i18n = require("../config/i18n");
 const resetPasswordMiddleware = require("../middlewares/resetPasswordMiddleware");
 const privateMiddleware = require("../middlewares/privateMiddleware");
+const publicMiddleware = require("../middlewares/publicMiddleware");
 
 router.get("/", (req, res) => {
   const token = req.cookies.moneezy_token;
@@ -32,7 +33,7 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/signup", (req, res) => {
+router.get("/signup", publicMiddleware, (req, res) => {
   const page = getPageConfig();
   page.i18n = {
     username_field: i18n.__("username_field"),
@@ -53,7 +54,7 @@ router.get("/signup", (req, res) => {
   });
 });
 
-router.get("/request-new-password", (req, res) => {
+router.get("/request-new-password", publicMiddleware, (req, res) => {
   const page = getPageConfig();
   page.i18n = {
     forgot_password: i18n.__("forgot_password"),
@@ -73,30 +74,101 @@ router.get("/request-new-password", (req, res) => {
   });
 });
 
-router.get("/reset-password", resetPasswordMiddleware, (req, res) => {
-  const page = getPageConfig();
-  page.i18n = {
-    password_field: i18n.__("password_field"),
-    password_confirmation_field: i18n.__("password_confirmation_field"),
-    save_button: i18n.__("save_button"),
-    reset_password: i18n.__("reset_password"),
-    field_required: i18n.__("field_required"),
-    password_confirmation_diff: i18n.__("password_confirmation_diff"),
-  };
-  page.css.push("/css/public_layout.css");
-  page.js.push("/js/reset_password.js");
-  page.config.title = `${config.system.name} - ${page.i18n.reset_password}`;
+router.get(
+  "/reset-password",
+  publicMiddleware,
+  resetPasswordMiddleware,
+  (req, res) => {
+    const page = getPageConfig();
+    page.i18n = {
+      password_field: i18n.__("password_field"),
+      password_confirmation_field: i18n.__("password_confirmation_field"),
+      save_button: i18n.__("save_button"),
+      reset_password: i18n.__("reset_password"),
+      field_required: i18n.__("field_required"),
+      password_confirmation_diff: i18n.__("password_confirmation_diff"),
+    };
+    page.css.push("/css/public_layout.css");
+    page.js.push("/js/reset_password.js");
+    page.config.title = `${config.system.name} - ${page.i18n.reset_password}`;
 
-  res.render("reset_password", {
-    page,
-    token: req.query.token,
-    layout: "../templates/public_layout",
-  });
-});
+    res.render("reset_password", {
+      page,
+      token: req.query.token,
+      layout: "../templates/public_layout",
+    });
+  }
+);
 
 router.get("/dashboard", privateMiddleware, (req, res) => {
   const page = getPageConfig(req.user);
   res.render("dashboard", {
+    current_page: "dashboard",
+    page,
+    layout: "../templates/private_layout",
+  });
+});
+
+router.get("/transactions", privateMiddleware, (req, res) => {
+  const page = getPageConfig(req.user);
+  res.render("transactions", {
+    current_page: "transactions",
+    page,
+    layout: "../templates/private_layout",
+  });
+});
+
+router.get("/budget", privateMiddleware, (req, res) => {
+  const page = getPageConfig(req.user);
+  res.render("budget", {
+    current_page: "budget",
+    page,
+    layout: "../templates/private_layout",
+  });
+});
+
+router.get("/report", privateMiddleware, (req, res) => {
+  const page = getPageConfig(req.user);
+  res.render("report", {
+    current_page: "report",
+    page,
+    layout: "../templates/private_layout",
+  });
+});
+
+router.get("/categories", privateMiddleware, (req, res) => {
+  const page = getPageConfig(req.user);
+  res.render("categories", {
+    current_page: "categories",
+    page,
+    layout: "../templates/private_layout",
+  });
+});
+
+router.get("/account", privateMiddleware, (req, res) => {
+  const page = getPageConfig(req.user);
+  page.i18n = {
+    username_field: i18n.__("username_field"),
+    email_field: i18n.__("email_field"),
+    current_password_field: i18n.__("current_password_field"),
+    new_password_field: i18n.__("new_password_field"),
+    save_button: i18n.__("save_button"),
+    field_required: i18n.__("field_required"),
+    delete_account_button: i18n.__("delete_account_button"),
+    swal_delete_account_text: i18n.__("swal_delete_account_text"),
+    swal_delete_account_button: i18n.__("swal_delete_account_button"),
+    swal_delete_account_confirm_required: i18n.__(
+      "swal_delete_account_confirm_required"
+    ),
+    swal_delete_account_confirm_incorrect: i18n.__(
+      "swal_delete_account_confirm_incorrect"
+    ),
+  };
+  page.js.push("/js/account.js");
+  page.config.title = `${config.system.name} - ${page.i18n_default.account}`;
+
+  res.render("account", {
+    current_page: "account",
     page,
     layout: "../templates/private_layout",
   });

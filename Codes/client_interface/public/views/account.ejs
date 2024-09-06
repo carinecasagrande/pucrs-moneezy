@@ -1,0 +1,59 @@
+<div class="bg-white border rounded p-4">
+  <h5 class="text-bold"><%-page.i18n_default.account%></h2>
+    <form id="form-update" class="mt-4 row g-3">
+      <div class="col-6">
+        <label for="form-update[username]" class="required"><%-page.i18n.username_field%></label>
+        <input type="text" id="form-update[username]" class="form-control" autocomplete="name" name="username" value="<%-page.config.user.username%>">
+      </div>
+      <div class="col-6">
+        <label for="form-update[email]" class="required"><%-page.i18n.email_field%></label>
+        <input type="text" id="form-update[email]" class="form-control" autocomplete="username" name="email" value="<%-page.config.user.email%>">
+      </div>
+      <div class="col-6">
+        <label for="form-update[current_password]"><%-page.i18n.current_password_field%></label>
+        <div class="field-password">
+          <input
+            type="password"
+            id="form-update[current_password]"
+            name="current_password"
+            class="form-control"
+            autocomplete="current-password"
+          />
+          <span
+            tabindex="0"
+            class="sap-icons btn-see-password"
+            data-id="#form-update\[current_password\]"
+            ></span
+          >
+        </div>      
+      </div>
+      <div class="col-6">
+        <label for="form-update[new_password]"><%-page.i18n.new_password_field%></label>
+        <div class="field-password">
+          <input
+            type="password"
+            id="form-update[new_password]"
+            name="new_password"
+            class="form-control"
+            autocomplete="new-password"
+          />
+          <span
+            tabindex="0"
+            class="sap-icons btn-see-password"
+            data-id="#form-update\[new_password\]"
+            ></span
+          >
+        </div>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-success" id="btn-save-update">
+          <span class="sap-icons me-1"></span>
+          <%-page.i18n.save_button%>
+        </button>
+        <button type="button" class="btn btn-danger" id="btn-remove-account">
+          <span class="sap-icons me-1"></span>
+          <%-page.i18n.delete_account_button%>
+        </button>
+      </div>
+    </form>
+</div>

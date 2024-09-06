@@ -96,7 +96,7 @@ const requestNewPassword = async (email) => {
  * Generate password reset token
  */
 const generateResetPasswordToken = async (user) => {
-  const minutes = config.settings.minutes_to_password_reset_token_expire;
+  const minutes = config.settings.minutes_to_password_reset_token_expire + 5;
   const reset_token = crypto.randomBytes(32).toString("hex");
   const expires_at = new Date(new Date().getTime() + minutes * 60000);
 
@@ -191,7 +191,7 @@ const logout = async (user_id) => {
   await revokeTokens(user_id);
 };
 
-const update = async (user_id, username, email, password, password_confirmation) => {
+const update = async (user_id, username, email, current_password, new_password) => {
   const user = await User.findOne({ where: { user_id } });
   if (!user) {
     throw new CustomError("user_not_found", 400);
@@ -206,10 +206,13 @@ const update = async (user_id, username, email, password, password_confirmation)
     updateData.email = email;
   }
 
-  if (password && !validator.isEmpty(password.trim())) {
-    updateData.password = password;
-    updateData.password_confirmation = password_confirmation;
-    updateData.password_hash = await encryptPassword(password);
+  if (
+    (current_password && !validator.isEmpty(current_password.trim())) ||
+    (new_password && !validator.isEmpty(new_password.trim()))
+  ) {
+    updateData.current_password = current_password;
+    updateData.new_password = new_password;
+    updateData.password_hash = await encryptPassword(new_password);
   }
 
   if (Object.keys(updateData).length === 0) {
@@ -220,6 +223,22 @@ const update = async (user_id, username, email, password, password_confirmation)
 
   if (updateData.email) {
     await checkIfEmailAlreadyRegistered(updateData.email, user.user_id);
+  }
+
+  if (updateData.current_password) {
+    const currentUser = await User.findOne({
+      where: {
+        user_id: user.user_id,
+      },
+    });
+
+    if (!currentUser) {
+      throw new CustomError("user_not_found", 400);
+    }
+
+    if (!(await currentUser.checkPassword(updateData.current_password))) {
+      throw new CustomError("current_password_incorrect", 401);
+    }
   }
 
   await User.update(updateData, {

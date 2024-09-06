@@ -31,5 +31,16 @@
   "logout": "Sair",
   "swal_cancel_button": "Cancelar",
   "swal_logout_button": "Sair",
-  "swal_logout_text": "Tem certeza que deseja sair?"
+  "swal_logout_text": "Tem certeza que deseja sair?",
+  "dashboard": "Visão Geral",
+  "transactions": "Lançamentos",
+  "budget": "Orçamento",
+  "report": "Relatório",
+  "current_password_field": "Senha Atual",
+  "new_password_field": "Nova Senha",
+  "delete_account_button": "Deletar Conta",
+  "swal_delete_account_text": "Para confirmar, digite <strong>Deletar Conta</strong> no campo abaixo.",
+  "swal_delete_account_button": "Excluir Conta",
+  "swal_delete_account_confirm_required": "Campo de confirmação é obrigatório.",
+  "swal_delete_account_confirm_incorrect": "Campo de confirmação incorreto."
 }

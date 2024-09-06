@@ -2,6 +2,12 @@ $(document).ready(function () {
   $("#btn-login").click(function () {
     dealLogin();
   });
+
+  $("#form-login").on("keydown", function (event) {
+    if (event.key === "Enter" && $(event.target).is("input")) {
+      dealLogin();
+    }
+  });
 });
 
 function dealLogin() {
@@ -29,11 +35,12 @@ function login() {
           title: $config.success_expression,
           text: result.responseJSON.message,
           status: "success",
+          speed: 200,
         });
         setCookie("moneezy_token", result.responseJSON.token);
         setTimeout(function () {
           window.location.href = "/";
-        }, 3000);
+        }, 2000);
       } else {
         new Notify({
           title: $config.error_expression,

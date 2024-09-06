@@ -53,13 +53,15 @@ body {
   background-color: #008773;
 }
 
-a {
+a,
+a:visited {
   text-decoration: none;
   color: #008773;
   transition: 0.2s;
 }
 
-a:visited {
+a.dropdown-item,
+a.dropdown-item:visited {
   color: inherit;
 }
 
@@ -102,4 +104,31 @@ input[type="password"] {
 .btn-dropdown {
   border: none !important
   ;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+a.menu-item,
+a.menu-item:visited {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999999;
+  gap: 0.5rem;
+}
+
+a.menu-item.active,
+a.menu-item.active:visited {
+  color: #f46664;
+}
+
+label.required::after {
+  content: "*";
+  margin-left: 5px;
+  color: #e15452;
 }

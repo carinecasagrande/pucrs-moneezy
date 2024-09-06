@@ -35,10 +35,11 @@ function changePassword() {
           title: $config.success_expression,
           text: result.responseJSON.message,
           status: "success",
+          speed: 200,
         });
         setTimeout(function () {
           window.location.href = "/";
-        }, 3000);
+        }, 2000);
       } else {
         new Notify({
           title: $config.error_expression,

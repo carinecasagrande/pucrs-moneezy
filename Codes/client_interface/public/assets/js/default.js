@@ -7,6 +7,10 @@ $(document).ready(function () {
     dealLogout();
   });
 
+  $("form").on("submit", function (event) {
+    event.preventDefault();
+  });
+
   initializeLoadingOverlay();
 });
 
@@ -73,9 +77,9 @@ function dealSeePassword(elem) {
   const field = $(`${elem.attr("data-id")}`);
   if (field.attr("type") == "password") {
     field.attr("type", "text");
-    elem.html("&#xe1ea;");
+    elem.html("");
   } else {
     field.attr("type", "password");
-    elem.html("&#xe1e9;");
+    elem.html("");
   }
 }

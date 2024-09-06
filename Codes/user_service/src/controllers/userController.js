@@ -159,15 +159,15 @@ const actionLogout = async (req, res) => {
  */
 const actionUpdate = async (req, res) => {
   try {
-    const { username, email, password, password_confirmation } = req.body;
+    const { username, email, current_password, new_password } = req.body;
     const user_id = req.user.id;
 
     const user = await update(
       user_id,
       username,
       email,
-      password,
-      password_confirmation
+      current_password,
+      new_password
     );
 
     await saveLog(req, "update", user.user_id);

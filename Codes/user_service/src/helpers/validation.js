@@ -109,20 +109,16 @@ const validateUpdate = (updateData) => {
     }
   }
 
-  if (updateData.password) {
-    if (validator.isEmpty(updateData.password.trim())) {
-      throw new CustomError("password_required", 400);
+  if (updateData.current_password) {
+    if (validator.isEmpty(updateData.current_password.trim())) {
+      throw new CustomError("current_password_required", 400);
     }
 
     if (
-      !updateData.password_confirmation ||
-      validator.isEmpty(updateData.password_confirmation.trim())
+      !updateData.new_password ||
+      validator.isEmpty(updateData.new_password.trim())
     ) {
-      throw new CustomError("password_confirmation_required", 400);
-    }
-
-    if (updateData.password !== updateData.password_confirmation) {
-      throw new CustomError("password_confirmation_diff", 400);
+      throw new CustomError("new_password_required", 400);
     }
   }
 };
