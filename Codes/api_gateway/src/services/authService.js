@@ -20,7 +20,6 @@ const verifyAccessToken = async (token) => {
 
     return jwt.verify(token, config.jwt.secret);
   } catch (error) {
-    console.log(error);
     throw new CustomError("token_invalid", 401);
   }
 };
