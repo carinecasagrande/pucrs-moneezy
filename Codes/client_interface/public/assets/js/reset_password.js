@@ -24,11 +24,7 @@ function changePassword() {
       Authorization: `Bearer ${$token}`,
     },
     method: "PATCH",
-    beforeSend: function () {
-      $.LoadingOverlay("show");
-    },
     complete: function (result) {
-      $.LoadingOverlay("hide");
       if (result.status == 200) {
         resetResetPasswordForm();
         new Notify({
@@ -40,12 +36,6 @@ function changePassword() {
         setTimeout(function () {
           window.location.href = "/";
         }, 2000);
-      } else {
-        new Notify({
-          title: $config.error_expression,
-          text: result.responseJSON.message,
-          status: "error",
-        });
       }
     },
   });

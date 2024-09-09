@@ -18,11 +18,7 @@ function requestNewPassword() {
       "Accept-Language": $config.locale,
     },
     method: "POST",
-    beforeSend: function () {
-      $.LoadingOverlay("show");
-    },
     complete: function (result) {
-      $.LoadingOverlay("hide");
       if (result.status == 200) {
         $("#form-forgot-password\\[email\\]").val("");
         new Notify({
@@ -34,12 +30,6 @@ function requestNewPassword() {
         setTimeout(function () {
           window.location.href = "/";
         }, 2000);
-      } else {
-        new Notify({
-          title: $config.error_expression,
-          text: result.responseJSON.message,
-          status: "error",
-        });
       }
     },
   });

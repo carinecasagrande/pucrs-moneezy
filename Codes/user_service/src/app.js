@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   if (req.hostname != config.hostname.api_gateway) {
-    throw new CustomError("request_not_permitted", 401);
+    throw new CustomError("request_not_permitted", 400);
   }
   next();
 });

@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
       layout: "../templates/public_layout",
     });
   } else {
-    res.redirect("/dashboard");
+    return res.redirect("/dashboard");
   }
 });
 

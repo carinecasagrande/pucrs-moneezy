@@ -11,8 +11,35 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  $(document).ajaxSend(function (event, jqxhr, settings) {
+    dealConfigureAjaxBeforeSend();
+  });
+
+  $(document).ajaxComplete(function (event, jqxhr, settings) {
+    dealConfigureAjaxAfterComplete(jqxhr);
+  });
+
   initializeLoadingOverlay();
 });
+
+function dealConfigureAjaxBeforeSend() {
+  $.LoadingOverlay("show");
+}
+
+function dealConfigureAjaxAfterComplete(jqxhr) {
+  $.LoadingOverlay("hide");
+
+  if (jqxhr.status == 401) {
+    setCookie("moneezy_token", "");
+    window.location.href = "/";
+  } else if (jqxhr.status != 200) {
+    new Notify({
+      title: $config.error_expression,
+      text: jqxhr.responseJSON.message,
+      status: "error",
+    });
+  }
+}
 
 function dealLogout() {
   Swal.fire({
@@ -48,20 +75,10 @@ function logout() {
       Authorization: `Bearer ${getCookie("moneezy_token")}`,
     },
     method: "POST",
-    beforeSend: function () {
-      $.LoadingOverlay("show");
-    },
     complete: function (result) {
-      $.LoadingOverlay("hide");
       if (result.status == 200) {
         setCookie("moneezy_token", "");
         window.location.href = "/";
-      } else {
-        new Notify({
-          title: $config.error_expression,
-          text: result.responseJSON.message,
-          status: "error",
-        });
       }
     },
   });

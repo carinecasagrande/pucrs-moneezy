@@ -24,11 +24,7 @@ function login() {
       "Accept-Language": $config.locale,
     },
     method: "POST",
-    beforeSend: function () {
-      $.LoadingOverlay("show");
-    },
     complete: function (result) {
-      $.LoadingOverlay("hide");
       if (result.status == 200) {
         resetLoginForm();
         new Notify({
@@ -41,12 +37,6 @@ function login() {
         setTimeout(function () {
           window.location.href = "/";
         }, 2000);
-      } else {
-        new Notify({
-          title: $config.error_expression,
-          text: result.responseJSON.message,
-          status: "error",
-        });
       }
     },
   });

@@ -4,6 +4,7 @@ const i18n = require("../config/i18n");
 const userService = require("../services/userService");
 const authMiddleware = require("../middlewares/authMiddleware");
 const userDeleteMiddleware = require("../middlewares/userDeleteMiddleware");
+const { verifyAccessToken } = require("../services/authService");
 
 // Account creation
 router.post("/signup", async (req, res) => {
@@ -132,6 +133,10 @@ router.put("/update", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(error.status).json(error.response.data);
   }
+});
+
+router.get("/validateJwtToken", authMiddleware, async (req, res) => {
+  res.status(200).json(req.user);
 });
 
 module.exports = router;

@@ -10,7 +10,8 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-    await verifyAccessToken(token);
+    req.user = await verifyAccessToken(token);
+
     next();
   } catch (err) {
     errorHandler(err, req, res, next);

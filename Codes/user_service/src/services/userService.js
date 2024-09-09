@@ -48,7 +48,7 @@ const login = async (email, password) => {
   }
 
   if (!(await user.checkPassword(password))) {
-    throw new CustomError("password_incorrect", 401);
+    throw new CustomError("password_incorrect", 400);
   }
 
   return user;
@@ -237,7 +237,7 @@ const update = async (user_id, username, email, current_password, new_password) 
     }
 
     if (!(await currentUser.checkPassword(updateData.current_password))) {
-      throw new CustomError("current_password_incorrect", 401);
+      throw new CustomError("current_password_incorrect", 400);
     }
   }
 

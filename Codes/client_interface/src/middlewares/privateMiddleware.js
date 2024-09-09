@@ -1,23 +1,19 @@
-const config = require("../config/config");
-const jwt = require("jsonwebtoken");
 const { CustomErrorMessage } = require("../errors/customError");
 const errorHandler = require("./errorHandler");
+const { validateJwtToken } = require("../services/userService");
 
 const privateMiddleware = async (req, res, next) => {
   try {
     const token = req.cookies.moneezy_token;
     if (!token) {
-      res.redirect("/");
+      return res.redirect("/");
     }
 
-    jwt.verify(token, config.jwt.secret, (err, decoded) => {
-      if (err) {
-        res.redirect("/");
-      }
-      req.user = decoded;
-      next();
-    });
+    req.user = await validateJwtToken(token);
+
+    next();
   } catch (err) {
+    res.cookie("moneezy_token", "");
     if (err.response && err.response.data) {
       next(
         new CustomErrorMessage(err.response.data.message, err.response.data.code)

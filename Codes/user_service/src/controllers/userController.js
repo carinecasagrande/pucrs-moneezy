@@ -21,8 +21,8 @@ const actionSignup = async (req, res) => {
 
     await signup(username, email, password);
 
-    res.status(201).json({
-      code: 201,
+    res.status(200).json({
+      code: 200,
       message: i18n.__("signup_success"),
       result: "success",
     });

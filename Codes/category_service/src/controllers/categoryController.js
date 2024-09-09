@@ -14,8 +14,8 @@ const actionCreate = async (req, res) => {
 
     await create(req.user.id, type, name, color, icon);
 
-    res.status(201).json({
-      code: 201,
+    res.status(200).json({
+      code: 200,
       message: i18n.__("create_success"),
       result: "success",
       category_list: await list(req.user.id),
