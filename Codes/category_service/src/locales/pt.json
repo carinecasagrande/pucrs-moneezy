@@ -12,5 +12,7 @@
 	"update_success": "update_success",
 	"update_error": "update_error",
 	"update_no_changes": "update_no_changes",
-	"delete_success": "delete_success"
+	"delete_success": "delete_success",
+	"delete_all_error": "delete_all_error",
+	"delete_all_success": "delete_all_success"
 }

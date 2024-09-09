@@ -3,6 +3,7 @@ const router = express.Router();
 const i18n = require("../config/i18n");
 const userService = require("../services/userService");
 const authMiddleware = require("../middlewares/authMiddleware");
+const userDeleteMiddleware = require("../middlewares/userDeleteMiddleware");
 
 // Account creation
 router.post("/signup", async (req, res) => {
@@ -86,7 +87,7 @@ router.patch("/changePassword", async (req, res) => {
 });
 
 // Delete an account
-router.delete("/delete", authMiddleware, async (req, res) => {
+router.delete("/delete", authMiddleware, userDeleteMiddleware, async (req, res) => {
   try {
     const response = await userService.delete("/delete", {
       headers: {

@@ -1,5 +1,11 @@
 const i18n = require("i18n");
-const { create, list, update, remove } = require("../services/categoryService");
+const {
+  create,
+  list,
+  update,
+  remove,
+  removeFromUser,
+} = require("../services/categoryService");
 const errorHandler = require("../middlewares/errorHandler");
 
 const actionCreate = async (req, res) => {
@@ -66,9 +72,24 @@ const actionDelete = async (req, res) => {
   }
 };
 
+const actionDeleteAllFromUser = async (req, res) => {
+  try {
+    await removeFromUser(req.user.id);
+
+    res.status(200).json({
+      code: 200,
+      message: i18n.__("delete_all_success"),
+      result: "success",
+    });
+  } catch (err) {
+    errorHandler(err, req, res, null, "delete_all_error");
+  }
+};
+
 module.exports = {
   actionCreate,
   actionList,
   actionUpdate,
   actionDelete,
+  actionDeleteAllFromUser,
 };

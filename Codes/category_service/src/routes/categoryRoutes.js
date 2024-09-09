@@ -8,5 +8,10 @@ router.post("/create", authMiddleware, categoryController.actionCreate);
 router.get("/list", authMiddleware, categoryController.actionList);
 router.put("/update/:id", authMiddleware, categoryController.actionUpdate);
 router.delete("/delete/:id", authMiddleware, categoryController.actionDelete);
+router.delete(
+  "/deleteAllFromUser",
+  authMiddleware,
+  categoryController.actionDeleteAllFromUser
+);
 
 module.exports = router;

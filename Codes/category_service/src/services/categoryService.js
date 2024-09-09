@@ -86,9 +86,18 @@ const remove = async (user_id, category_id) => {
   await category.destroy();
 };
 
+const removeFromUser = async (user_id) => {
+  await Category.destroy({
+    where: {
+      user_id,
+    },
+  });
+};
+
 module.exports = {
   create,
   list,
   update,
   remove,
+  removeFromUser,
 };
