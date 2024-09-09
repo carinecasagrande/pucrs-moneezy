@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 module.exports = {
-  env: process.env.NODE_ENV,
   port: process.env.PORT,
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -15,6 +14,7 @@ module.exports = {
   },
   endpoint: {
     userService: process.env.ENDPOINT_USER_SERVICE,
+    categoryService: process.env.ENDPOINT_CATEGORY_SERVICE,
   },
   system: {
     default_locale: process.env.SYSTEM_DEFAULT_LOCALE,

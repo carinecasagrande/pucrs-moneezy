@@ -9,7 +9,6 @@ const {
   update,
   verifyChangePasswordToken,
 } = require("../services/userService");
-const { saveLog } = require("../services/logService");
 const { generateAccessToken } = require("../services/authService");
 const errorHandler = require("../middlewares/errorHandler");
 
@@ -20,9 +19,7 @@ const actionSignup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    const user = await signup(username, email, password);
-
-    await saveLog(req, "signup", user.user_id);
+    await signup(username, email, password);
 
     res.status(201).json({
       code: 201,
@@ -44,7 +41,6 @@ const actionLogin = async (req, res) => {
     const user = await login(email, password);
 
     const accessToken = await generateAccessToken(req, user);
-    await saveLog(req, "login", user.user_id);
 
     res.status(200).json({
       code: 200,
@@ -65,8 +61,6 @@ const actionRequestNewPassword = async (req, res) => {
     const { email } = req.body;
 
     const user = await requestNewPassword(email);
-
-    await saveLog(req, "requestNewPassword", user.user_id);
 
     res.status(200).json({
       code: 200,
@@ -105,8 +99,6 @@ const actionChangePassword = async (req, res) => {
 
     await changePassword(tokenInfo, password, password_confirmation);
 
-    await saveLog(req, "changePassword", tokenInfo.user_id);
-
     res.status(200).json({
       code: 200,
       message: i18n.__("changePassword_success"),
@@ -142,7 +134,6 @@ const actionLogout = async (req, res) => {
     const user_id = req.user.id;
 
     await logout(user_id);
-    await saveLog(req, "logout", user_id);
 
     res.status(200).json({
       code: 200,
@@ -169,8 +160,6 @@ const actionUpdate = async (req, res) => {
       current_password,
       new_password
     );
-
-    await saveLog(req, "update", user.user_id);
 
     const accessToken = await generateAccessToken(req, user, true);
 

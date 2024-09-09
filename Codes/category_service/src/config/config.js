@@ -15,19 +15,6 @@ module.exports = {
   jwt: {
     secret: process.env.JWT_SECRET,
   },
-  nodemailer: {
-    service: process.env.NODEMAILER_SERVICE,
-    user: process.env.NODEMAILER_AUTH_USER,
-    password: process.env.NODEMAILER_AUTH_PASSWORD,
-  },
-  settings: {
-    minutes_to_password_reset_token_expire: parseInt(
-      process.env.SETTINGS_MINUTES_TO_PASSWORD_RESET_TOKEN_EXPIRE
-    ),
-  },
-  endpoint: {
-    clientInterface: process.env.ENDPOINT_CLIENT_INTERFACE,
-  },
   hostname: {
     api_gateway: process.env.HOSTNAME_API_GATEWAY,
   },

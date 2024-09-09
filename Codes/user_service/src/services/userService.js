@@ -73,7 +73,7 @@ const requestNewPassword = async (email) => {
   }
 
   const reset_token = await generateResetPasswordToken(user);
-  const link = `${config.endpoint.clientInterface}reset-password?token=${reset_token}`;
+  const link = `${config.endpoint.clientInterface}reset-password/${reset_token}`;
   const subject = i18n.__("requestNewPassword_subject");
   const minutes = config.settings.minutes_to_password_reset_token_expire;
 

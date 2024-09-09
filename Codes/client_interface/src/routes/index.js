@@ -75,7 +75,7 @@ router.get("/request-new-password", publicMiddleware, (req, res) => {
 });
 
 router.get(
-  "/reset-password",
+  "/reset-password/:token",
   publicMiddleware,
   resetPasswordMiddleware,
   (req, res) => {
@@ -94,7 +94,7 @@ router.get(
 
     res.render("reset_password", {
       page,
-      token: req.query.token,
+      token: req.params.token,
       layout: "../templates/public_layout",
     });
   }

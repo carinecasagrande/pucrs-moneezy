@@ -40,17 +40,3 @@ CREATE TABLE `user_service_db`.`jwt_tokens` (
         REFERENCES `users` (`user_id`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-CREATE TABLE `user_service_db`.`audit_logs` (
-    `audit_id` INT NOT NULL AUTO_INCREMENT,
-    `user_id` INT NOT NULL,
-    `action` VARCHAR(100) NOT NULL,
-    `timestamp` DATETIME DEFAULT NULL,
-    `ip_address` VARCHAR(45) DEFAULT NULL,
-    `user_agent` VARCHAR(200) DEFAULT NULL,
-    PRIMARY KEY (`audit_id`),
-    KEY `user_id` (`user_id`),
-    CONSTRAINT `audit_logs_ibfk_1` FOREIGN KEY (`user_id`)
-        REFERENCES `users` (`user_id`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);

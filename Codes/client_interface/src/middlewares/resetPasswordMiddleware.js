@@ -4,7 +4,7 @@ const errorHandler = require("./errorHandler");
 
 const resetPasswordMiddleware = async (req, res, next) => {
   try {
-    const token = req.query.token;
+    const token = req.params.token;
     if (!token) {
       throw new CustomError("token_not_provided", 400);
     }
