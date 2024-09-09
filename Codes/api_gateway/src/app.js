@@ -22,6 +22,11 @@ app.use((req, res, next) => {
 });
 app.use(i18n.init);
 
+app.use((req, res, next) => {
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  next();
+});
+
 // Routes and Errors
 app.use("/api", routes);
 

@@ -22,6 +22,11 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  next();
+});
+
+app.use((req, res, next) => {
   if (req.hostname != config.hostname.api_gateway) {
     throw new CustomError("request_not_permitted", 400);
   }

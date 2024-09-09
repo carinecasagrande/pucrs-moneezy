@@ -16,7 +16,7 @@ $(document).ready(function () {
   });
 
   $(document).ajaxComplete(function (event, jqxhr, settings) {
-    dealConfigureAjaxAfterComplete(jqxhr);
+    dealConfigureAjaxAfterComplete(jqxhr, settings);
   });
 
   initializeLoadingOverlay();
@@ -26,15 +26,19 @@ function dealConfigureAjaxBeforeSend() {
   $.LoadingOverlay("show");
 }
 
-function dealConfigureAjaxAfterComplete(jqxhr) {
+function dealConfigureAjaxAfterComplete(jqxhr, settings) {
   $.LoadingOverlay("hide");
 
   if (jqxhr.status == 401) {
     setCookie("moneezy_token", "");
     window.location.href = "/";
   } else if (jqxhr.status != 200) {
+    if (settings.skipAjaxComplete) {
+      return;
+    }
+
     new Notify({
-      title: $config.error_expression,
+      title: $i18n_default.error_expression,
       text: jqxhr.responseJSON.message,
       status: "error",
     });
@@ -49,7 +53,7 @@ function dealLogout() {
     reverseButtons: true,
     showCancelButton: true,
     confirmButtonText: $i18n_default.swal_logout_button,
-    cancelButtonText: $i18n_default.swal_cancel_button,
+    cancelButtonText: $i18n_default.cancel_text,
   }).then((result) => {
     if (result.isConfirmed) {
       logout();
@@ -94,9 +98,9 @@ function dealSeePassword(elem) {
   const field = $(`${elem.attr("data-id")}`);
   if (field.attr("type") == "password") {
     field.attr("type", "text");
-    elem.html("");
+    elem.html("&#xe1ea;");
   } else {
     field.attr("type", "password");
-    elem.html("");
+    elem.html("&#xe1e9;");
   }
 }

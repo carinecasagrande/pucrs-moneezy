@@ -1,1 +1,181 @@
-categories
+<div class="bg-white border rounded p-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h5 class="text-bold mb-0"><%-page.i18n_default.categories%></h5>
+    <button class="btn btn-brand-primary" id="btn-modal-category">
+      <span class="sap-icons">&#xe058;</span>
+      <%-page.i18n_default.category%>
+    </button>
+  </div>
+
+  <div class="mt-3">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link active"
+          id="pills-expenses-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-expenses"
+          type="button"
+          role="tab"
+          aria-controls="pills-expenses"
+          aria-selected="true"
+        >
+          <%-page.i18n_default.expenses%>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button
+          class="nav-link"
+          id="pills-revenues-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-revenues"
+          type="button"
+          role="tab"
+          aria-controls="pills-revenues"
+          aria-selected="false"
+        >
+          <%-page.i18n_default.revenues%>
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade show active%>"
+        id="pills-expenses"
+        role="tabpanel"
+        aria-labelledby="pills-expenses-tab"
+        tabindex="0"
+      ></div>
+      <div
+        class="tab-pane fade"
+        id="pills-revenues"
+        role="tabpanel"
+        aria-labelledby="pills-revenues-tab"
+        tabindex="0"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modal-category"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modal-category-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-category-label"></div>
+        <button
+          type="button"
+          class="btn-close small"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-category" class="row g-3">
+          <div class="col-12 d-flex align-items-center">
+            <div
+              id="modal-category-div"
+              class="category-icon me-3"
+              style="
+                background: <%- colors[0] %>50;
+                color: <%-colors[0]%>;
+                height: 62px;
+                width: 62px;
+                font-size: 1.5rem;
+              "
+            >
+              <span class="sap-icons" id="modal-category-icon">&#xe137;</span>
+            </div>
+            <div style="flex: 1">
+              <label for="form-category[name]" class="required"
+                ><%-page.i18n.category_name_field%></label
+              >
+              <input
+                type="text"
+                id="form-category[name]"
+                name="name"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="form-category[type]" class="required">
+              <%-page.i18n.category_type_field%>
+            </label>
+            <select name="type" id="form-category[type]" class="form-select">
+              <option value="O"><%-page.i18n_default.expenses%></option>
+              <option value="I"><%-page.i18n_default.revenues%></option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label for="form-category[color]" class="required">
+              <%-page.i18n.category_color_field%>
+            </label>
+            <input
+              type="hidden"
+              name="color"
+              id="form-category[color]"
+              value="<%-colors[0]%>"
+            />
+            <div class="color-options">
+              <% for(var i in colors){ %>
+              <div
+                id="color-item-<%-colors[i]%>"
+                class="color-item <%-i == 0 ? 'active' : ''%>"
+                style="background: <%-colors[i]%>50"
+                data-id="<%-colors[i]%>"
+              ></div>
+              <% } %>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="form-category[icon]" class="required">
+              <%-page.i18n.category_icon_field%>
+            </label>
+            <input
+              type="hidden"
+              name="icon"
+              id="form-category[icon]"
+              value="<%-icons[0]%>"
+            />
+            <div class="icon-options">
+              <% for(var i in icons){ %>
+              <div
+                id="icon-item-<%-icons[i]%>"
+                class="icon-item <%-i == 0 ? 'active' : ''%>"
+                style="background: <%-colors[0]%>50; color: <%-colors[0]%>"
+                data-id="<%-icons[i]%>"
+              >
+                <span class="sap-icons">&#<%-icons[i]%>;</span>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <span class="sap-icons">&#xe03e;</span>
+          <%- page.i18n_default.cancel_text %>
+        </button>
+        <button type="button" class="btn btn-success" id="btn-save-category">
+          <span class="sap-icons">&#xe09a;</span>
+          <%-page.i18n_default.save_button%>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var $currentTab = "expenses";
+  const $icons = <%-JSON.stringify(icons)%>;
+  const $colors =<%-JSON.stringify(colors)%>;
+</script>

@@ -22,10 +22,10 @@ function requestNewPassword() {
       if (result.status == 200) {
         $("#form-forgot-password\\[email\\]").val("");
         new Notify({
-          title: $config.success_expression,
+          title: $i18n_default.success_expression,
           text: result.responseJSON.message,
           status: "success",
-          speed: 200,
+          autotimeout: 2000,
         });
         setTimeout(function () {
           window.location.href = "/";
@@ -42,7 +42,7 @@ function isValidForgotPassword() {
     valid = false;
     new Notify({
       title: $i18n.email_field,
-      text: $i18n.field_required,
+      text: $i18n_default.field_required,
       status: "error",
     });
   }

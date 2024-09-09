@@ -32,20 +32,11 @@ body {
   border-color: #caced1;
 }
 
-.btn-brand-secondary {
-  background-color: #f46664;
-  border-color: #f46664;
-  color: #fff;
-  transition: 0.2s;
-}
-
-.btn-brand-secondary:hover,
-.btn-brand-secondary:active,
-.btn-brand-secondary:focus-visible {
-  transition: 0.2s;
-  background-color: #e15452 !important;
-  border-color: #e15452 !important;
-  color: #fff !important;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .dropdown-item.active,
@@ -57,7 +48,7 @@ a,
 a:visited {
   text-decoration: none;
   color: #008773;
-  transition: 0.2s;
+  transition: 0.5s !important;
 }
 
 a.dropdown-item,
@@ -67,7 +58,6 @@ a.dropdown-item:visited {
 
 a:hover {
   opacity: 0.8;
-  transition: 0.2s;
 }
 
 .field-password {
@@ -131,4 +121,174 @@ label.required::after {
   content: "*";
   margin-left: 5px;
   color: #e15452;
+}
+
+.nav-pills {
+  flex-wrap: nowrap;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-link {
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  border-radius: 0 !important;
+  color: #4e4e4e;
+  transition: 0.5s !important;
+}
+
+.nav-link:hover {
+  color: #4e4e4e;
+  opacity: 0.8;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #f46664;
+  background-color: #fff;
+  border-color: #f46664;
+}
+
+.alert {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 700;
+}
+
+.btn-success {
+  --bs-btn-bg: #1b8719;
+  --bs-btn-border-color: #1b8719;
+  --bs-btn-hover-bg: #137112;
+  --bs-btn-hover-border-color: #137112;
+  --bs-btn-active-bg: #137112;
+  --bs-btn-active-border-color: #137112;
+  --bs-btn-disabled-bg: #1b8719;
+  --bs-btn-disabled-border-color: #1b8719;
+}
+
+.btn-danger {
+  --bs-btn-bg: #c90000;
+  --bs-btn-border-color: #c90000;
+  --bs-btn-hover-bg: #af0000;
+  --bs-btn-hover-border-color: #af0000;
+  --bs-btn-active-bg: #af0000;
+  --bs-btn-active-border-color: #af0000;
+  --bs-btn-disabled-bg: #c90000;
+  --bs-btn-disabled-border-color: #c90000;
+}
+
+.btn-brand-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #f46664;
+  --bs-btn-border-color: #f46664;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e15452;
+  --bs-btn-hover-border-color: #e15452;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #e15452;
+  --bs-btn-active-border-color: #e15452;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #f46664;
+  --bs-btn-disabled-border-color: #f46664;
+}
+
+.btn-brand-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #008773;
+  --bs-btn-border-color: #008773;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #006c5c;
+  --bs-btn-hover-border-color: #006c5c;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #006c5c;
+  --bs-btn-active-border-color: #006c5c;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #008773;
+  --bs-btn-disabled-border-color: #008773;
+}
+
+.btn {
+  transition: 0.5s !important;
+}
+
+.btn-highlight {
+  --bs-btn-color: #008773;
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #008773;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #006c5c;
+  --bs-btn-hover-border-color: #006c5c;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #006c5c;
+  --bs-btn-active-border-color: #006c5c;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #008773;
+  --bs-btn-disabled-bg: #fff;
+  --bs-btn-disabled-border-color: #008773;
+}
+
+.alert-danger {
+  --bs-alert-color: #2a2a2a;
+  --bs-alert-bg: #ffffff;
+  --bs-alert-border-color: #eb5757;
+  --bs-alert-link-color: #2a2a2a;
+}
+
+.alert-danger::before {
+  font-family: "SAP-icons";
+  content: "";
+  color: #eb5757;
+  font-size: 2rem;
+}
+
+.alert-warning {
+  --bs-alert-color: #2a2a2a;
+  --bs-alert-bg: #ffffff;
+  --bs-alert-border-color: #daa506;
+  --bs-alert-link-color: #2a2a2a;
+}
+
+.alert-warning::before {
+  font-family: "SAP-icons";
+  content: "";
+  color: #daa506;
+  font-size: 2rem;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

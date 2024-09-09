@@ -28,10 +28,10 @@ function login() {
       if (result.status == 200) {
         resetLoginForm();
         new Notify({
-          title: $config.success_expression,
+          title: $i18n_default.success_expression,
           text: result.responseJSON.message,
           status: "success",
-          speed: 200,
+          autotimeout: 2000,
         });
         setCookie("moneezy_token", result.responseJSON.token);
         setTimeout(function () {
@@ -54,7 +54,7 @@ function isValidLogin() {
     valid = false;
     new Notify({
       title: $i18n.email_field,
-      text: $i18n.field_required,
+      text: $i18n_default.field_required,
       status: "error",
     });
   }
@@ -63,7 +63,7 @@ function isValidLogin() {
     valid = false;
     new Notify({
       title: $i18n.password_field,
-      text: $i18n.field_required,
+      text: $i18n_default.field_required,
       status: "error",
     });
   }
