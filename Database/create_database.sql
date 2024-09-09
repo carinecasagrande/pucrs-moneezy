@@ -40,3 +40,20 @@ CREATE TABLE `user_service_db`.`jwt_tokens` (
         REFERENCES `users` (`user_id`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- Category Database
+CREATE SCHEMA `category_service_db`;
+
+CREATE TABLE `categories` (
+    `category_id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `type` ENUM('I', 'O') NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `color` CHAR(7) NOT NULL DEFAULT '#4e4e4e',
+    `icon` CHAR(8) NOT NULL DEFAULT '&#xe137;',
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`category_id`),
+    UNIQUE KEY `categories_user_id_name` (`user_id` , `name`),
+    KEY `categories_user_id` (`user_id`)
+);
