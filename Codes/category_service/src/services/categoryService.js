@@ -37,7 +37,7 @@ const list = async (user_id) => {
   return output;
 };
 
-const update = async (user_id, category_id, name, color, icon) => {
+const update = async (user_id, category_id, name, color, icon, type) => {
   const category = await Category.findOne({ where: { user_id, category_id } });
   if (!category) {
     throw new CustomError("category_not_found", 400);
@@ -54,6 +54,10 @@ const update = async (user_id, category_id, name, color, icon) => {
   var updateData = {};
   if (name && category.name !== name) {
     updateData.name = name;
+  }
+
+  if (type && category.type !== type) {
+    updateData.type = type;
   }
 
   if (color && category.color !== color) {

@@ -29,6 +29,10 @@ const validateUpdate = (updateData) => {
   if (updateData.name && validator.isEmpty(updateData.name.trim())) {
     throw new CustomError("name_required", 400);
   }
+
+  if (updateData.type && ["I", "O"].indexOf(updateData.type) === -1) {
+    throw new CustomError("type_required", 400);
+  }
 };
 
 module.exports = {

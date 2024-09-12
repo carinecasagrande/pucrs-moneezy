@@ -30,7 +30,6 @@ const actionList = async (req, res) => {
     const category_list = await list(req.user.id);
     res.status(200).json({
       code: 200,
-      message: i18n.__("list_success"),
       result: "success",
       category_list,
     });
@@ -42,9 +41,9 @@ const actionList = async (req, res) => {
 const actionUpdate = async (req, res) => {
   try {
     const category_id = req.params.id;
-    const { name, color, icon } = req.body;
+    const { name, color, icon, type } = req.body;
 
-    await update(req.user.id, category_id, name, color, icon);
+    await update(req.user.id, category_id, name, color, icon, type);
 
     res.status(200).json({
       code: 200,

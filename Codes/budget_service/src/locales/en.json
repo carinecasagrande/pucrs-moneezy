@@ -12,5 +12,7 @@
   "budget_not_found": "Budget not found.",
   "delete_success": "Budget deleted successfully.",
   "token_not_provided": "Token not provided.",
-  "request_not_permitted": "Request not permitted."
+  "request_not_permitted": "Request not permitted.",
+  "delete_error": "An error occurred while deleting the budget. Please try again later.",
+  "delete_all_error": "An error occurred while deleting all budgets. Please try again later."
 }
