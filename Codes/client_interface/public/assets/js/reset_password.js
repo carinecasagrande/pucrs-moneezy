@@ -28,7 +28,7 @@ function changePassword() {
       if (result.status == 200) {
         resetResetPasswordForm();
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
           autotimeout: 2000,
@@ -52,7 +52,7 @@ function isValidResetPassword() {
     valid = false;
     new Notify({
       title: $i18n.password_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -61,7 +61,7 @@ function isValidResetPassword() {
     valid = false;
     new Notify({
       title: $i18n.password_confirmation_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }

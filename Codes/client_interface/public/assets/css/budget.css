@@ -1,0 +1,10 @@
+.div-budget-date {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#budget-date {
+  width: 200px;
+  text-align: center;
+}

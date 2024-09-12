@@ -27,34 +27,36 @@
             class="menu-item <%-current_page == 'dashboard' ? 'active' : ''%>"
           >
             <span class="sap-icons">&#xe120;</span>
-            <%-page.i18n_default.dashboard%>
+            <%-page.i18n.dashboard%>
           </a>
           <a
             href="/transactions"
             class="menu-item <%-current_page == 'transactions' ? 'active' : ''%>"
           >
             <span class="sap-icons">&#xe117;</span>
-            <%-page.i18n_default.transactions%>
+            <%-page.i18n.transactions%>
           </a>
           <a
             href="/budget"
             class="menu-item <%-current_page == 'budget' ? 'active' : ''%>"
           >
             <span class="sap-icons">&#xe033;</span>
-            <%-page.i18n_default.budget%>
+            <%-page.i18n.budget%>
           </a>
           <a
             href="/report"
             class="menu-item <%-current_page == 'report' ? 'active' : ''%>"
           >
             <span class="sap-icons">&#xe11f;</span>
-            <%-page.i18n_default.report%>
+            <%-page.i18n.report%>
           </a>
         </div>
         <div class="d-flex align-items-center justify-content-center">
           <div class="text-end me-2">
-            <p class="mb-0 text-muted small"><%-page.i18n_default.welcome_text%></p>
-            <p class="mb-0 text-bold"><%- page.config.user.username %></p>
+            <p class="mb-0 text-muted small"><%-page.i18n.welcome_text%></p>
+            <p class="mb-0 text-bold header-username">
+              <%- page.config.user.firstname %>
+            </p>
           </div>
           <div class="btn-group">
             <button
@@ -66,18 +68,16 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
                 <a class="dropdown-item" href="/categories"
-                  ><%-page.i18n_default.categories%></a
+                  ><%-page.i18n.categories%></a
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="/account"
-                  ><%-page.i18n_default.account%></a
-                >
+                <a class="dropdown-item" href="/account"><%-page.i18n.account%></a>
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
                 <button type="button" id="btn-logout" class="dropdown-item">
-                  <%-page.i18n_default.logout%>
+                  <%-page.i18n.logout%>
                 </button>
               </li>
             </ul>
@@ -91,7 +91,6 @@
 
   <script>
     const $i18n = <%-JSON.stringify(page.i18n)%>;
-    const $i18n_default = <%-JSON.stringify(page.i18n_default)%>;
     const $config = <%- JSON.stringify(page.config) %>;
   </script>
   <% for(var i in page.js){ %>

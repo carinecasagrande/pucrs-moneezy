@@ -12,14 +12,6 @@ router.get("/", (req, res) => {
   const token = req.cookies.moneezy_token;
   if (token == undefined || token.trim() == "") {
     const page = getPageConfig();
-    page.i18n = {
-      email_field: i18n.__("email_field"),
-      password_field: i18n.__("password_field"),
-      forgot_password: i18n.__("forgot_password"),
-      login_button: i18n.__("login_button"),
-      register_text: i18n.__("register_text"),
-      register_link: i18n.__("register_link"),
-    };
     page.css.push("/css/public_layout.css");
     page.js.push("/js/login.js");
     page.config.title = `${config.system.name} - ${page.i18n.login_button}`;
@@ -35,14 +27,6 @@ router.get("/", (req, res) => {
 
 router.get("/signup", publicMiddleware, (req, res) => {
   const page = getPageConfig();
-  page.i18n = {
-    username_field: i18n.__("username_field"),
-    email_field: i18n.__("email_field"),
-    password_field: i18n.__("password_field"),
-    signup_button: i18n.__("signup_button"),
-    login_text: i18n.__("login_text"),
-    login_link: i18n.__("login_link"),
-  };
   page.css.push("/css/public_layout.css");
   page.js.push("/js/signup.js");
   page.config.title = `${config.system.name} - ${page.i18n.signup_button}`;
@@ -55,12 +39,6 @@ router.get("/signup", publicMiddleware, (req, res) => {
 
 router.get("/request-new-password", publicMiddleware, (req, res) => {
   const page = getPageConfig();
-  page.i18n = {
-    forgot_password: i18n.__("forgot_password"),
-    forgot_password_desc: i18n.__("forgot_password_desc"),
-    email_field: i18n.__("email_field"),
-    send_field: i18n.__("send_field"),
-  };
   page.css.push("/css/public_layout.css");
   page.js.push("/js/request_new_password.js");
   page.config.title = `${config.system.name} - ${page.i18n.forgot_password}`;
@@ -77,12 +55,6 @@ router.get(
   resetPasswordMiddleware,
   (req, res) => {
     const page = getPageConfig();
-    page.i18n = {
-      password_field: i18n.__("password_field"),
-      password_confirmation_field: i18n.__("password_confirmation_field"),
-      reset_password: i18n.__("reset_password"),
-      password_confirmation_diff: i18n.__("password_confirmation_diff"),
-    };
     page.css.push("/css/public_layout.css");
     page.js.push("/js/reset_password.js");
     page.config.title = `${config.system.name} - ${page.i18n.reset_password}`;
@@ -113,8 +85,12 @@ router.get("/transactions", privateMiddleware, (req, res) => {
   });
 });
 
-router.get("/budget", privateMiddleware, (req, res) => {
+router.get("/budget", privateMiddleware, async (req, res) => {
   const page = getPageConfig(req.user);
+  page.css.push("/css/budget.css");
+  page.js.push("/js/budget.js");
+  page.config.title = `${config.system.name} - ${page.i18n.budget}`;
+
   res.render("budget", {
     current_page: "budget",
     page,
@@ -131,20 +107,11 @@ router.get("/report", privateMiddleware, (req, res) => {
   });
 });
 
-router.get("/categories", privateMiddleware, (req, res) => {
+router.get("/categories", privateMiddleware, async (req, res) => {
   const page = getPageConfig(req.user);
-  page.i18n = {
-    swal_remove_category_text: i18n.__("swal_remove_category_text"),
-    category_name_field: i18n.__("category_name_field"),
-    category_type_field: i18n.__("category_type_field"),
-    category_color_field: i18n.__("category_color_field"),
-    category_icon_field: i18n.__("category_icon_field"),
-    category_id_missing: i18n.__("category_id_missing"),
-    category_not_found: i18n.__("category_not_found"),
-  };
   page.css.push("/css/categories.css");
   page.js.push("/js/categories.js");
-  page.config.title = `${config.system.name} - ${page.i18n_default.categories}`;
+  page.config.title = `${config.system.name} - ${page.i18n.categories}`;
 
   res.render("categories", {
     current_page: "categories",
@@ -157,23 +124,8 @@ router.get("/categories", privateMiddleware, (req, res) => {
 
 router.get("/account", privateMiddleware, (req, res) => {
   const page = getPageConfig(req.user);
-  page.i18n = {
-    username_field: i18n.__("username_field"),
-    email_field: i18n.__("email_field"),
-    current_password_field: i18n.__("current_password_field"),
-    new_password_field: i18n.__("new_password_field"),
-    delete_account_button: i18n.__("delete_account_button"),
-    swal_delete_account_text: i18n.__("swal_delete_account_text"),
-    swal_delete_account_button: i18n.__("swal_delete_account_button"),
-    swal_delete_account_confirm_required: i18n.__(
-      "swal_delete_account_confirm_required"
-    ),
-    swal_delete_account_confirm_incorrect: i18n.__(
-      "swal_delete_account_confirm_incorrect"
-    ),
-  };
   page.js.push("/js/account.js");
-  page.config.title = `${config.system.name} - ${page.i18n_default.account}`;
+  page.config.title = `${config.system.name} - ${page.i18n.account}`;
 
   res.render("account", {
     current_page: "account",

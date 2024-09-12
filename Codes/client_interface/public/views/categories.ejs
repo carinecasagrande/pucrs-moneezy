@@ -1,9 +1,9 @@
 <div class="bg-white border rounded p-4">
   <div class="d-flex align-items-center justify-content-between">
-    <h5 class="text-bold mb-0"><%-page.i18n_default.categories%></h5>
+    <h5 class="text-bold mb-0"><%-page.i18n.categories%></h5>
     <button class="btn btn-brand-primary" id="btn-modal-category">
       <span class="sap-icons">&#xe058;</span>
-      <%-page.i18n_default.category%>
+      <%-page.i18n.category%>
     </button>
   </div>
 
@@ -20,7 +20,7 @@
           aria-controls="pills-expenses"
           aria-selected="true"
         >
-          <%-page.i18n_default.expenses%>
+          <%-page.i18n.expenses%>
         </button>
       </li>
       <li class="nav-item" role="presentation">
@@ -34,7 +34,7 @@
           aria-controls="pills-revenues"
           aria-selected="false"
         >
-          <%-page.i18n_default.revenues%>
+          <%-page.i18n.revenues%>
         </button>
       </li>
     </ul>
@@ -98,6 +98,7 @@
                 ><%-page.i18n.category_name_field%></label
               >
               <input
+              autocomplete="off"
                 type="text"
                 id="form-category[name]"
                 name="name"
@@ -110,8 +111,8 @@
               <%-page.i18n.category_type_field%>
             </label>
             <select name="type" id="form-category[type]" class="form-select">
-              <option value="O"><%-page.i18n_default.expenses%></option>
-              <option value="I"><%-page.i18n_default.revenues%></option>
+              <option value="O"><%-page.i18n.expenses%></option>
+              <option value="I"><%-page.i18n.revenues%></option>
             </select>
           </div>
           <div class="col-12">
@@ -163,11 +164,11 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           <span class="sap-icons">&#xe03e;</span>
-          <%- page.i18n_default.cancel_text %>
+          <%- page.i18n.cancel_text %>
         </button>
         <button type="button" class="btn btn-success" id="btn-save-category">
           <span class="sap-icons">&#xe09a;</span>
-          <%-page.i18n_default.save_button%>
+          <%-page.i18n.save_button%>
         </button>
       </div>
     </div>

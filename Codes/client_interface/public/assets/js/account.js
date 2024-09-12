@@ -21,7 +21,7 @@ function isValidUpdate() {
     valid = false;
     new Notify({
       title: $i18n.username_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -30,7 +30,7 @@ function isValidUpdate() {
     valid = false;
     new Notify({
       title: $i18n.email_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -43,7 +43,7 @@ function isValidUpdate() {
       valid = false;
       new Notify({
         title: $i18n.current_password_field,
-        text: $i18n_default.field_required,
+        text: $i18n.field_required,
         status: "error",
       });
     }
@@ -52,7 +52,7 @@ function isValidUpdate() {
       valid = false;
       new Notify({
         title: $i18n.new_password_field,
-        text: $i18n_default.field_required,
+        text: $i18n.field_required,
         status: "error",
       });
     }
@@ -73,7 +73,7 @@ function saveUpdate() {
     complete: function (result) {
       if (result.status == 200) {
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
           autotimeout: 2000,
@@ -96,7 +96,7 @@ function dealRemoveAccount() {
     reverseButtons: true,
     showCancelButton: true,
     confirmButtonText: $i18n.swal_delete_account_button,
-    cancelButtonText: $i18n_default.cancel_text,
+    cancelButtonText: $i18n.cancel_text,
     inputValidator: (value) => {
       if (!value) {
         return $i18n.swal_delete_account_confirm_required;
@@ -121,7 +121,7 @@ function removeAccount() {
     method: "DELETE",
     complete: function (result) {
       if (result.status == 200) {
-        setCookie("moneezy_token", "");
+        clearCookies();
         window.location.href = "/";
       }
     },

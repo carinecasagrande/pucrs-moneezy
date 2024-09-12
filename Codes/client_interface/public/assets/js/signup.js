@@ -22,7 +22,7 @@ function signup() {
       if (result.status == 200) {
         resetSignupForm();
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
           autotimeout: 2000,
@@ -48,7 +48,7 @@ function isValidSignup() {
     valid = false;
     new Notify({
       title: $i18n.username_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -57,7 +57,7 @@ function isValidSignup() {
     valid = false;
     new Notify({
       title: $i18n.email_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -66,7 +66,7 @@ function isValidSignup() {
     valid = false;
     new Notify({
       title: $i18n.password_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }

@@ -1,4 +1,3 @@
-var $category_list = { I: [], O: [] };
 var $isCreateOrUpdate = "create";
 var $updateId = null;
 
@@ -37,7 +36,7 @@ $(document).ready(function () {
     dealSaveCategory();
   });
 
-  loadCategories();
+  dealShowCategories();
 });
 
 function dealUpdateCategory(id) {
@@ -53,7 +52,7 @@ function dealUpdateCategory(id) {
 
   if (category == null) {
     new Notify({
-      title: $i18n_default.error_expression,
+      title: $i18n.error_expression,
       text: $i18n.category_not_found,
       status: "error",
     });
@@ -62,7 +61,7 @@ function dealUpdateCategory(id) {
     $isCreateOrUpdate = "update";
     $updateId = id;
     $("#modal-category-label").html(
-      `<span class="sap-icons me-1">&#xe038;</span>${$i18n_default.category}`
+      `<span class="sap-icons me-1">&#xe038;</span>${$i18n.category}`
     );
     $("#form-category\\[name\\]").val(category.name);
     $("#form-category\\[type\\]").val(category.type);
@@ -83,7 +82,7 @@ function dealCreateCategory() {
   resetFormCategory();
   $("#form-category\\[type\\]").val($currentTab == "expenses" ? "O" : "I");
   $("#modal-category-label").html(
-    `<span class="sap-icons me-1">&#xe058;</span>${$i18n_default.category}`
+    `<span class="sap-icons me-1">&#xe058;</span>${$i18n.category}`
   );
   $("#modal-category").modal("show");
 }
@@ -110,7 +109,7 @@ function updateCategory() {
     complete: function (result) {
       if (result.status == 200) {
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
           autotimeout: 2000,
@@ -134,7 +133,7 @@ function createCategory() {
     complete: function (result) {
       if (result.status == 200) {
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
           autotimeout: 2000,
@@ -153,7 +152,7 @@ function isValidCategory() {
     valid = false;
     new Notify({
       title: $i18n.category_name_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -162,7 +161,7 @@ function isValidCategory() {
     valid = false;
     new Notify({
       title: $i18n.category_type_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -171,7 +170,7 @@ function isValidCategory() {
     valid = false;
     new Notify({
       title: $i18n.category_color_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -180,7 +179,7 @@ function isValidCategory() {
     valid = false;
     new Notify({
       title: $i18n.category_icon_field,
-      text: $i18n_default.field_required,
+      text: $i18n.field_required,
       status: "error",
     });
   }
@@ -237,8 +236,8 @@ function dealRemoveCategory(id) {
     text: $i18n.swal_remove_category_text,
     reverseButtons: true,
     showCancelButton: true,
-    confirmButtonText: $i18n_default.swal_remove_button,
-    cancelButtonText: $i18n_default.cancel_text,
+    confirmButtonText: $i18n.remove_button,
+    cancelButtonText: $i18n.cancel_text,
   }).then((result) => {
     if (result.isConfirmed) {
       removeCategory(id);
@@ -257,11 +256,11 @@ function removeCategory(id) {
     complete: function (result) {
       if (result.status == 200) {
         new Notify({
-          title: $i18n_default.success_expression,
+          title: $i18n.success_expression,
           text: result.responseJSON.message,
           status: "success",
         });
-        $category_list = result.responseJSON.category_list;
+        setCategoryList(result.responseJSON.category_list);
         dealShowCategories();
       }
     },
@@ -279,21 +278,26 @@ function loadCategories() {
     method: "GET",
     complete: function (result) {
       if (result.status == 200) {
-        $category_list = result.responseJSON.category_list;
+        setCategoryList(result.responseJSON.category_list);
         dealShowCategories();
       } else {
-        $category_list = { I: [], O: [] };
+        setCategoryList({ I: [], O: [] });
         showError(result.responseJSON);
       }
     },
   });
 }
 
+function setCategoryList(list) {
+  $category_list = list;
+  setCookie("moneezy_categories", JSON.stringify(list));
+}
+
 function showError(data) {
   var html = ``;
   html += `<div class="alert alert-danger">`;
   html += ` <div class="alert-content">`;
-  html += `   <div class="alert-title">${$i18n_default.error_expression}</div>`;
+  html += `   <div class="alert-title">${$i18n.error_expression}</div>`;
   html += `   <div class="alert-text">${data.code} - ${data.message}</div>`;
   html += ` </div>`;
   html += `</div>`;
@@ -317,17 +321,17 @@ function showCategories(type, div) {
       html += `     <div class="category-name">${category.name}</div>`;
       html += `   </div>`;
       html += `   <div>`;
-      html += `     <button class="btn btn-sm btn-highlight btn-edit-category" data-id=${category.category_id}><span class="sap-icons">&#xe038;</span></button>`;
-      html += `     <button class="btn btn-sm btn-danger btn-remove-category" data-id=${category.category_id}><span class="sap-icons">&#xe03d;</span></button>`;
+      html += `     <button class="btn btn-sm btn-highlight btn-edit-category" data-id="${category.category_id}"><span class="sap-icons">&#xe038;</span></button>`;
+      html += `     <button class="btn btn-sm btn-danger btn-remove-category" data-id="${category.category_id}"><span class="sap-icons">&#xe03d;</span></button>`;
       html += `   </div>`;
       html += ` </li>`;
     }
     html += `</ul>`;
   } else {
-    html += `<div class="alert alert-warning">`;
+    html += `<div class="alert alert-secondary">`;
     html += ` <div class="alert-content">`;
-    html += `   <div class="alert-title">${$i18n_default.error_expression}</div>`;
-    html += `   <div class="alert-text">${$i18n_default.no_results}</div>`;
+    html += `   <div class="alert-title">${$i18n.error_expression}</div>`;
+    html += `   <div class="alert-text">${$i18n.no_results}</div>`;
     html += ` </div>`;
     html += `</div>`;
   }

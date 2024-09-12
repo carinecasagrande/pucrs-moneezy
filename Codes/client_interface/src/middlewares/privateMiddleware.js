@@ -1,6 +1,6 @@
 const { CustomErrorMessage } = require("../errors/customError");
 const errorHandler = require("./errorHandler");
-const { validateJwtToken } = require("../services/userService");
+const { validateJwtToken, setDefaultCookies } = require("../services/userService");
 
 const privateMiddleware = async (req, res, next) => {
   try {
@@ -11,9 +11,10 @@ const privateMiddleware = async (req, res, next) => {
 
     req.user = await validateJwtToken(token);
 
+    await setDefaultCookies(req, res);
+
     next();
   } catch (err) {
-    res.cookie("moneezy_token", "");
     if (err.response && err.response.data) {
       next(
         new CustomErrorMessage(err.response.data.message, err.response.data.code)

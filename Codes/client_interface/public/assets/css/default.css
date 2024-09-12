@@ -97,6 +97,7 @@ input[type="password"] {
 }
 
 .menu {
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,17 +258,17 @@ label.required::after {
   font-size: 2rem;
 }
 
-.alert-warning {
+.alert-secondary {
   --bs-alert-color: #2a2a2a;
   --bs-alert-bg: #ffffff;
-  --bs-alert-border-color: #daa506;
+  --bs-alert-border-color: #7a7a7a;
   --bs-alert-link-color: #2a2a2a;
 }
 
-.alert-warning::before {
+.alert-secondary::before {
   font-family: "SAP-icons";
   content: "";
-  color: #daa506;
+  color: #7a7a7a;
   font-size: 2rem;
 }
 
@@ -291,4 +292,31 @@ label.required::after {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.datepicker-top-left,
+.datepicker-top-right {
+  border-top-color: #038773;
+}
+
+.datepicker-top-left:before,
+.datepicker-top-right:before {
+  border-bottom-color: #038773;
+}
+
+.datepicker-panel > ul > li.picked,
+.datepicker-panel > ul > li.picked:hover {
+  color: #038773;
+}
+
+.datepicker-panel > ul > li.highlighted {
+  background-color: #d1ebe8;
+}
+
+.datepicker-panel > ul > li:hover {
+  background-color: #e8f6f4;
+}
+
+.datepicker-panel > ul > li.highlighted:hover {
+  background-color: #b8ddd8;
 }

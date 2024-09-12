@@ -1,3 +1,5 @@
+var $category_list = JSON.parse(getCookie("moneezy_categories"));
+
 $(document).ready(function () {
   $(".btn-see-password").click(function () {
     dealSeePassword($(this));
@@ -20,7 +22,16 @@ $(document).ready(function () {
   });
 
   initializeLoadingOverlay();
+  initializeMasks();
 });
+
+function initializeMasks() {
+  if ($config.i18n_language == "pt-BR") {
+    $(".mask-money").mask("#.##0,00", { reverse: true });
+  } else {
+    $(".mask-money").mask("#,##0.00", { reverse: true });
+  }
+}
 
 function dealConfigureAjaxBeforeSend() {
   $.LoadingOverlay("show");
@@ -30,7 +41,7 @@ function dealConfigureAjaxAfterComplete(jqxhr, settings) {
   $.LoadingOverlay("hide");
 
   if (jqxhr.status == 401) {
-    setCookie("moneezy_token", "");
+    clearCookies();
     window.location.href = "/";
   } else if (jqxhr.status != 200) {
     if (settings.skipAjaxComplete) {
@@ -38,7 +49,7 @@ function dealConfigureAjaxAfterComplete(jqxhr, settings) {
     }
 
     new Notify({
-      title: $i18n_default.error_expression,
+      title: $i18n.error_expression,
       text: jqxhr.responseJSON.message,
       status: "error",
     });
@@ -49,11 +60,11 @@ function dealLogout() {
   Swal.fire({
     icon: "warning",
     confirmButtonColor: "#db9357",
-    text: $i18n_default.swal_logout_text,
+    text: $i18n.swal_logout_text,
     reverseButtons: true,
     showCancelButton: true,
-    confirmButtonText: $i18n_default.swal_logout_button,
-    cancelButtonText: $i18n_default.cancel_text,
+    confirmButtonText: $i18n.swal_logout_button,
+    cancelButtonText: $i18n.cancel_text,
   }).then((result) => {
     if (result.isConfirmed) {
       logout();
@@ -64,7 +75,10 @@ function dealLogout() {
 function getCookie(key) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${key}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
+  if (parts.length === 2) {
+    return decodeURIComponent(parts.pop().split(";").shift());
+  }
+  return null;
 }
 
 function setCookie(key, value) {
@@ -81,7 +95,7 @@ function logout() {
     method: "POST",
     complete: function (result) {
       if (result.status == 200) {
-        setCookie("moneezy_token", "");
+        clearCookies();
         window.location.href = "/";
       }
     },
@@ -103,4 +117,51 @@ function dealSeePassword(elem) {
     field.attr("type", "password");
     elem.html("&#xe1e9;");
   }
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function clearCookies() {
+  setCookie("moneezy_token", "");
+  setCookie("moneezy_categories", "");
+  setCookie("moneezy_budget", "");
+}
+
+function formatCurrency(value) {
+  if (typeof value !== "number") {
+    value = parseFloat(value);
+  }
+
+  return value.toLocaleString($config.i18n_language, {
+    style: "currency",
+    currency: $config.currency,
+  });
+}
+
+function formatFloat(value) {
+  if (typeof value !== "number") {
+    value = parseFloat(value);
+  }
+
+  return value.toLocaleString($config.i18n_language, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+function parseCurrency(value) {
+  if (typeof value !== "number") {
+    value = value.replace(/(R\$|\$|\s)/g, "");
+    if ($config.i18n_language == "pt-BR") {
+      value = value.replace(/\./g, "");
+      value = value.replace(/,/g, ".");
+    } else {
+      value = value.replace(/,/g, "");
+    }
+    value = parseFloat(value);
+  }
+
+  return Math.round(value * 100) / 100;
 }

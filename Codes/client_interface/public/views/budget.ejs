@@ -1,1 +1,63 @@
-budget
+<div class="bg-white border rounded p-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h5 class="text-bold mb-0"><%-page.i18n.budget%></h5>
+    <div class="div-budget-date">
+      <input type="hidden" id="filter-budget-date" />
+      <button class="btn btn-change-date" data-type="previous">
+        <span class="sap-icons">&#xe1eb;</span>
+      </button>
+      <div class="mb-0" id="budget-date"></div>
+      <button class="btn btn-change-date" data-type="next">
+        <span class="sap-icons">&#xe066;</span>
+      </button>
+    </div>
+  </div>
+  <div class="mt-4" id="div-budget-result"></div>
+</div>
+
+<div
+  class="modal fade"
+  id="modal-save-budget"
+  tabindex="-1"
+  aria-labelledby="modal-save-budget-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="mb-3">
+          <p class="mb-0 text-bold" id="modal-save-budget-title"></p>
+          <p class="small mb-0" id="modal-save-budget-subtitle"></p>
+        </div>
+        <form id="form-save-budget">
+          <input type="hidden" id="form-save-budget[date]" name="date" />
+          <input
+            type="hidden"
+            id="form-save-budget[category_id]"
+            name="category_id"
+          />
+          <input type="hidden" id="form-save-budget[value]" name="value" />
+          <input
+            type="text"
+            id="form-save-budget[value_string]"
+            class="form-control mask-money"
+          />
+        </form>
+        <div class="mt-3">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <span class="sap-icons">&#xe03e;</span>
+            <%- page.i18n.cancel_text %>
+          </button>
+          <button type="button" class="btn btn-danger" id="btn-remove-budget">
+            <span class="sap-icons">&#xe03d;</span>
+            <%-page.i18n.remove_button%>
+          </button>
+          <button type="button" class="btn btn-success" id="btn-save-budget">
+            <span class="sap-icons">&#xe09a;</span>
+            <%-page.i18n.save_button%>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
