@@ -1,0 +1,16 @@
+{
+  "resource_not_found": "Resource not found.",
+  "date_required": "Date is required.",
+  "save_error": "An error occurred while saving. Please try again later.",
+  "category_required": "Category is required.",
+  "value_required": "Value is required.",
+  "save_success": "Budget saved successfully.",
+  "token_invalid": "Invalid token.",
+  "list_error": "An error occurred while listing the budget. Please try again later.",
+  "default_error": "An error occurred while performing this action. Please try again later.",
+  "delete_all_success": "Budgets deleted successfully.",
+  "budget_not_found": "Budget not found.",
+  "delete_success": "Budget deleted successfully.",
+  "token_not_provided": "Token not provided.",
+  "request_not_permitted": "Request not permitted."
+}

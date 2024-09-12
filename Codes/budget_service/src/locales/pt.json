@@ -1,0 +1,16 @@
+{
+  "resource_not_found": "Recurso não encontrado.",
+  "date_required": "Data é obrigatório",
+  "save_error": "Ocorreu um erro ao salvar. Tente novamente mais tarde.",
+  "category_required": "Categoria é obrigatório.",
+  "value_required": "Valor é obrigatório.",
+  "save_success": "Orçamento salvo com sucesso.",
+  "token_invalid": "Token inválido.",
+  "list_error": "Ocorreu um erro ao listar o orçamento. Tente novamente mais tarde.",
+  "default_error": "Ocorreu um erro ao realizar esta ação. Tente novamente mais tarde.",
+  "delete_all_success": "Orçamentos deletados com sucesso.",
+  "budget_not_found": "Orçamento não encontrado.",
+  "delete_success": "Orçamento deletado com sucesos.",
+  "token_not_provided": "Token não fornecido.",
+  "request_not_permitted": "Requisição não permitida."
+}

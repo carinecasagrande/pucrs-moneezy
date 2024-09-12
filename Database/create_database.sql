@@ -57,3 +57,17 @@ CREATE TABLE `categories` (
     UNIQUE KEY `categories_user_id_name` (`user_id` , `name`),
     KEY `categories_user_id` (`user_id`)
 );
+
+-- Budget Database
+CREATE SCHEMA `budget_service_db`;
+
+CREATE TABLE `budget` (
+    `date` DATE NOT NULL,
+    `category_id` INT NOT NULL,
+    `user_id` INT NOT NULL,
+    `value` DOUBLE NOT NULL,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`date` , `category_id`),
+    KEY `budget_user_id` (`user_id`)
+);
