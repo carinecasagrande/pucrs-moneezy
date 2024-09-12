@@ -4,7 +4,7 @@
   "login_success": "Login successful.",
   "login_error": "An error occurred while logging in. Please try again later.",
   "requestNewPassword_success": "An email has been sent with instructions to reset your password.",
-  "requestNewPassword_error": "An error occurred while requesting password reset. Please try again later.",
+  "requestNewPassword_error": "An error occurred while requesting the password reset. Please try again later.",
   "changePassword_success": "Password changed successfully.",
   "changePassword_error": "An error occurred while changing the password. Please try again later.",
   "deleteAccount_success": "Account deleted successfully.",
@@ -12,7 +12,7 @@
   "logout_success": "Logout successful.",
   "logout_error": "An error occurred while logging out. Please try again later.",
   "update_success": "Data updated successfully.",
-  "update_error": "An error occurred while updating data. Please try again later.",
+  "update_error": "An error occurred while updating the data. Please try again later.",
   "username_required": "Username is required.",
   "email_required": "Email is required.",
   "email_invalid": "Invalid email.",
@@ -34,6 +34,6 @@
   "update_no_changes": "No changes found.",
   "resource_not_found": "Resource not found.",
   "request_not_permitted": "Request not permitted.",
-  "validatePasswordResetToken_success": "Token is valid.",
+  "validatePasswordResetToken_success": "Valid token.",
   "validatePasswordResetToken_error": "An error occurred while validating the token. Please try again later."
 }
