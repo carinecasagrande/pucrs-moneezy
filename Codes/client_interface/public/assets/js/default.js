@@ -1,8 +1,18 @@
 var $category_list = getCookie("moneezy_categories");
-if (getCookie("moneezy_categories")) {
-  $category_list = JSON.parse(getCookie("moneezy_categories"));
+if ($category_list) {
+  $category_list = JSON.parse($category_list);
 }
 var $balance = getCookie("moneezy_balance");
+
+var $budget_list = getCookie("moneezy_budget");
+if ($budget_list) {
+  $budget_list = JSON.parse($budget_list);
+}
+
+var $transaction_list = getCookie("moneezy_transaction");
+if ($transaction_list) {
+  $transaction_list = JSON.parse($transaction_list);
+}
 
 $(document).ready(function () {
   $(".btn-see-password").click(function () {
@@ -28,6 +38,103 @@ $(document).ready(function () {
   initializeLoadingOverlay();
   initializeMasks();
 });
+
+function getValueExpenseByCategoryAndMonth(date) {
+  var splitDate = date.split("-");
+  date = `${splitDate[0]}-${splitDate[1]}`;
+  const list = $transaction_list[date];
+
+  var result = {};
+  for (var i in list) {
+    for (var j in list[i]) {
+      const elem = list[i][j];
+
+      if (elem.type == "O") {
+        var category = elem.category_id == null ? 0 : elem.category_id;
+        if (result[category] == undefined) {
+          result[category] = {
+            total: 0,
+            realized: 0,
+          };
+        }
+        result[category].total += elem.value;
+
+        if (elem.status) {
+          result[category].realized += elem.value;
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+function calcPercent(valueBase, value) {
+  return (value * 100) / valueBase;
+}
+
+function loadTransaction(date, callback = null) {
+  return $.ajax({
+    url: `${$config.endpoind_api_gateway}/api/transaction/list/${date}`,
+    headers: {
+      "Accept-Language": $config.locale,
+      Authorization: `Bearer ${getCookie("moneezy_token")}`,
+    },
+    method: "GET",
+    complete: function (result) {
+      if (result.status == 200) {
+        setTransactionList(
+          result.responseJSON.transaction_list,
+          result.responseJSON.balance
+        );
+
+        if (callback != null) {
+          callback();
+        }
+      }
+    },
+  });
+}
+
+function setTransactionList(list, balance) {
+  if (!$transaction_list) {
+    $transaction_list = {};
+    $balance = 0;
+  }
+
+  $balance = balance;
+  for (var i in list) {
+    $transaction_list[i] = list[i];
+  }
+
+  setCookie("moneezy_transaction", JSON.stringify($transaction_list));
+  setCookie("moneezy_balance", JSON.stringify($balance));
+}
+
+function loadBudget(date) {
+  $.ajax({
+    url: `${$config.endpoind_api_gateway}/api/budget/list/${date}`,
+    headers: {
+      "Accept-Language": $config.locale,
+      Authorization: `Bearer ${getCookie("moneezy_token")}`,
+    },
+    method: "GET",
+    complete: function (result) {
+      if (result.status == 200) {
+        setBudgetList(date, result.responseJSON.budget_list);
+      }
+    },
+  });
+}
+
+function setBudgetList(date, list) {
+  if (!$budget_list) {
+    $budget_list = {};
+  }
+
+  $budget_list[date] = list;
+  setCookie("moneezy_budget", JSON.stringify($budget_list));
+}
 
 function initializeMasks() {
   if ($config.i18n_language == "pt-BR") {

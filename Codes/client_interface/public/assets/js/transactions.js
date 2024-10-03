@@ -1,5 +1,3 @@
-var $transaction_list = getCookie("moneezy_transaction");
-
 $(document).ready(function () {
   $(document).on("click", ".btn-change-date", function () {
     var type = $(this).attr("data-type");
@@ -127,8 +125,6 @@ function dealEditTransaction(month, date, id) {
     $("#btn-remove-transaction").removeClass("d-none");
     $editId = elem.transaction_id;
     var splitDate = elem.date.split("-");
-
-    console.log(elem.date, splitDate);
 
     $("#form-transactions\\[type\\]").val(elem.type).change();
     $("#form-transactions\\[description\\]").val(elem.name);
@@ -388,47 +384,14 @@ function dealLoadTransaction(date) {
 
     if ($transaction_list[date] == undefined) {
       loadTransaction(date);
+      showTransaction(date);
     } else {
       showTransaction(date);
     }
   } else {
     loadTransaction(date);
+    showTransaction(date);
   }
-}
-
-function loadTransaction(date) {
-  $.ajax({
-    url: `${$config.endpoind_api_gateway}/api/transaction/list/${date}`,
-    headers: {
-      "Accept-Language": $config.locale,
-      Authorization: `Bearer ${getCookie("moneezy_token")}`,
-    },
-    method: "GET",
-    complete: function (result) {
-      if (result.status == 200) {
-        setTransactionList(
-          result.responseJSON.transaction_list,
-          result.responseJSON.balance
-        );
-        showTransaction(date);
-      }
-    },
-  });
-}
-
-function setTransactionList(list, balance) {
-  if (!$transaction_list) {
-    $transaction_list = {};
-    $balance = 0;
-  }
-
-  $balance = balance;
-  for (var i in list) {
-    $transaction_list[i] = list[i];
-  }
-
-  setCookie("moneezy_transaction", JSON.stringify($transaction_list));
-  setCookie("moneezy_balance", JSON.stringify($balance));
 }
 
 function initializeDatepicker() {

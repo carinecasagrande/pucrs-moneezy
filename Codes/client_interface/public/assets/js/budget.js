@@ -1,5 +1,3 @@
-var $budget_list = getCookie("moneezy_budget");
-
 $(document).ready(function () {
   $(document).on("click", ".btn-change-date", function () {
     var type = $(this).attr("data-type");
@@ -60,7 +58,7 @@ function removeBudget() {
       if (result.status == 200) {
         $("#modal-save-budget").modal("hide");
         setBudgetList(date, result.responseJSON.budget_list);
-        showBudget(date);
+        dealShowBudget(date);
       }
     },
   });
@@ -120,7 +118,7 @@ function saveBudget() {
         $("#modal-save-budget").modal("hide");
         const date = $("#form-save-budget\\[date\\]").val();
         setBudgetList(date, result.responseJSON.budget_list);
-        showBudget(date);
+        dealShowBudget(date);
       }
     },
   });
@@ -157,44 +155,22 @@ function dealLoadBudget(date) {
 
     if ($budget_list[date] == undefined) {
       loadBudget(date);
+      dealShowBudget(date);
     } else {
-      showBudget(date);
+      dealShowBudget(date);
     }
   } else {
     loadBudget(date);
+    dealShowBudget(date);
   }
-}
-
-function loadBudget(date) {
-  $.ajax({
-    url: `${$config.endpoind_api_gateway}/api/budget/list/${date}`,
-    headers: {
-      "Accept-Language": $config.locale,
-      Authorization: `Bearer ${getCookie("moneezy_token")}`,
-    },
-    method: "GET",
-    complete: function (result) {
-      if (result.status == 200) {
-        setBudgetList(date, result.responseJSON.budget_list);
-        showBudget(date);
-      }
-    },
-  });
-}
-
-function setBudgetList(date, list) {
-  if (!$budget_list) {
-    $budget_list = {};
-  }
-
-  $budget_list[date] = list;
-  setCookie("moneezy_budget", JSON.stringify($budget_list));
 }
 
 function showBudget(date) {
+  var expenseByCategory = getValueExpenseByCategoryAndMonth(date);
   var html = ``;
   const expensesCategory = $category_list["O"];
   const bugdetMonth = $budget_list[date];
+
   if (expensesCategory.length > 0) {
     for (var i in expensesCategory) {
       const category = expensesCategory[i];
@@ -204,7 +180,37 @@ function showBudget(date) {
       html += ` <div class="d-flex align-items-center justify-content-between">`;
       html += `   <p class="mb-1 me-2">${category.name}</p>`;
       html += `   <div>`;
+      var percent1 = 0;
+      var percent2 = 0;
       if (valueBudget) {
+        var percentTotal = 0;
+        var percentRealized = 0;
+        var valueTotal = 0;
+        if (expenseByCategory[category.category_id]) {
+          valueTotal = expenseByCategory[category.category_id].total;
+          percentTotal = calcPercent(
+            valueBudget,
+            expenseByCategory[category.category_id].total
+          );
+          percentRealized = calcPercent(
+            valueBudget,
+            expenseByCategory[category.category_id].realized
+          );
+        }
+
+        if (percentRealized > percentTotal) {
+          percent1 = percentRealized;
+        } else {
+          percent1 = percentRealized;
+          percent2 = percentTotal - percent1;
+        }
+
+        if (valueTotal > 0) {
+          html += `   <span class="text-bold">${formatCurrency(valueTotal)}</span> ${
+            $i18n.string_divider
+          } `;
+        }
+
         html += `   ${formatCurrency(valueBudget)}`;
         html += `   <button class="btn btn-sm btn-edit-budget" data-name="${category.name}" tabindex="0" data-bs-placement="bottom" data-date="${date}" data-category=${category.category_id} data-value=${valueBudget} data-bs-toggle="popover"><span class="sap-icons">&#xe038;</span></button>`;
       } else {
@@ -213,7 +219,8 @@ function showBudget(date) {
       html += `   </div>`;
       html += ` </div>`;
       html += ` <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">`;
-      html += `   <div class="progress-bar" style="width: 0%"></div>`;
+      html += `   <div class="progress-bar" style="background-color: ${category.color}; width: ${percent1}%"></div>`;
+      html += `   <div class="progress-bar" style="background-color: ${category.color};width: ${percent2}%;opacity: 0.3"></div>`;
       html += ` </div>`;
       html += `</div>`;
     }
@@ -227,6 +234,20 @@ function showBudget(date) {
   }
 
   $("#div-budget-result").html(html);
+}
+
+function dealShowBudget(date) {
+  var splitDate = date.split("-");
+  if (
+    $transaction_list == null ||
+    $transaction_list[`${splitDate[0]}-${splitDate[1]}`] == undefined
+  ) {
+    loadTransaction(date, function () {
+      showBudget(date);
+    });
+  } else {
+    showBudget(date);
+  }
 }
 
 function initializeDatepicker() {
