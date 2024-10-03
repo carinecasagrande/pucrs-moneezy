@@ -280,9 +280,9 @@ function showTransaction(date) {
             date1.getMonth() === date2.getMonth() &&
             date1.getDate() === date2.getDate()
           ) {
-            colorStatus = "#f9dada";
-          } else if (date1 < date2) {
             colorStatus = "#F9F2DA";
+          } else if (date1 < date2) {
+            colorStatus = "#f9dada";
           }
         }
 

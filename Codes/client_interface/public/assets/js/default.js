@@ -1,4 +1,7 @@
-var $category_list = JSON.parse(getCookie("moneezy_categories"));
+var $category_list = getCookie("moneezy_categories");
+if (getCookie("moneezy_categories")) {
+  $category_list = JSON.parse(getCookie("moneezy_categories"));
+}
 var $balance = getCookie("moneezy_balance");
 
 $(document).ready(function () {
