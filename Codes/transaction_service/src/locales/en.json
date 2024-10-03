@@ -1,0 +1,11 @@
+{
+	"list_error": "list_error",
+	"date_required": "date_required",
+	"create_error": "create_error",
+	"category_required": "category_required",
+	"create_success": "create_success",
+	"delete_success": "delete_success",
+	"delete_all_success": "delete_all_success",
+	"update_success": "update_success",
+	"update_error": "update_error"
+}

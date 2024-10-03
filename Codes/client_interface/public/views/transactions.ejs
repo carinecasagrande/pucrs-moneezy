@@ -1,1 +1,16 @@
-transactions
+<div class="bg-white border rounded p-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h5 class="text-bold mb-0"><%-page.i18n.transactions%></h5>
+    <div class="div-transactions-date">
+      <input type="hidden" id="filter-transactions-date" />
+      <button class="btn btn-change-date" data-type="previous">
+        <span class="sap-icons">&#xe1eb;</span>
+      </button>
+      <div class="mb-0" id="transactions-date"></div>
+      <button class="btn btn-change-date" data-type="next">
+        <span class="sap-icons">&#xe066;</span>
+      </button>
+    </div>
+  </div>
+  <div class="mt-4" id="div-transactions-result"></div>
+</div>

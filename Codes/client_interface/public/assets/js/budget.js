@@ -135,7 +135,6 @@ function dealChangeDate(type) {
       year -= 1;
     } else {
       month -= 1;
-      $category_list;
     }
   } else {
     if (month == 12) {

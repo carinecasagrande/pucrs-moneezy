@@ -1,0 +1,10 @@
+.div-transactions-date {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#transactions-date {
+  width: 200px;
+  text-align: center;
+}

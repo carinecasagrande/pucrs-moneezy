@@ -78,6 +78,10 @@ router.get("/dashboard", privateMiddleware, (req, res) => {
 
 router.get("/transactions", privateMiddleware, (req, res) => {
   const page = getPageConfig(req.user);
+  page.css.push("/css/transactions.css");
+  page.js.push("/js/transactions.js");
+  page.config.title = `${config.system.name} - ${page.i18n.transactions}`;
+
   res.render("transactions", {
     current_page: "transactions",
     page,

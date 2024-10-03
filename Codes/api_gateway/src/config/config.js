@@ -16,6 +16,7 @@ module.exports = {
     userService: process.env.ENDPOINT_USER_SERVICE,
     categoryService: process.env.ENDPOINT_CATEGORY_SERVICE,
     budgetService: process.env.ENDPOINT_BUDGET_SERVICE,
+    transactionService: process.env.ENDPOINT_TRANSACION_SERVICE,
   },
   system: {
     default_locale: process.env.SYSTEM_DEFAULT_LOCALE,

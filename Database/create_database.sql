@@ -71,3 +71,29 @@ CREATE TABLE `budget` (
     PRIMARY KEY (`date` , `category_id`),
     KEY `budget_user_id` (`user_id`)
 );
+
+-- Transaction Database
+CREATE SCHEMA `transaction_service_db`;
+
+CREATE TABLE `transactions` (
+    `transaction_id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `type` ENUM('I', 'O') NOT NULL,
+    `date` DATE NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `category_id` INT DEFAULT NULL,
+    `value` DOUBLE NOT NULL,
+    `status` TINYINT(1) NOT NULL,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`transaction_id`),
+    KEY `transactions_user_id_date` (`user_id` , `date`)
+);
+
+CREATE TABLE `balance` (
+    `user_id` INT NOT NULL,
+    `value` DOUBLE NOT NULL,
+    `createdAt` DATETIME NOT NULL,
+    `updatedAt` DATETIME NOT NULL,
+    PRIMARY KEY (`user_id`)
+);
