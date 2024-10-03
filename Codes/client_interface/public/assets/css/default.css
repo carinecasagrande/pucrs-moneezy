@@ -320,3 +320,7 @@ label.required::after {
 .datepicker-panel > ul > li.highlighted:hover {
   background-color: #b8ddd8;
 }
+
+.datepicker-dropdown {
+  z-index: 9999 !important;
+}

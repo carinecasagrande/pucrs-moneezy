@@ -42,6 +42,9 @@ const setDefaultCookies = async (req, res) => {
 const deleteDefaultCookies = (res) => {
   res.cookie("moneezy_token", "");
   res.cookie("moneezy_categories", "");
+  res.cookie("moneezy_budget", "");
+  res.cookie("moneezy_transaction", "");
+  res.cookie("moneezy_balance", "");
 };
 
 module.exports = {

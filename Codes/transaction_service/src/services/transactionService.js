@@ -7,6 +7,10 @@ const { Op } = require("sequelize");
 const create = async (user_id, type, date, name, category_id, value, status) => {
   date = parseDate(date);
 
+  if (category_id == "") {
+    category_id = null;
+  }
+
   validateCreate(type, date, name, category_id, value, status);
 
   await Transaction.create({
@@ -29,6 +33,8 @@ const create = async (user_id, type, date, name, category_id, value, status) => 
 };
 
 const updateBalance = async (user_id, value) => {
+  value = parseFloat(value);
+
   const balance = await Balance.findOne({
     where: {
       user_id,
@@ -36,12 +42,12 @@ const updateBalance = async (user_id, value) => {
   });
 
   if (balance) {
-    balance.value = balance.value + value;
+    balance.value = (balance.value + value).toFixed(2);
     await balance.save();
   } else {
     await Balance.create({
       user_id,
-      value,
+      value: value.toFixed(2),
     });
   }
 };
@@ -50,7 +56,8 @@ const list = async (user_id, monthList) => {
   var output = {};
 
   for (const month of monthList) {
-    const initialDate = new Date(`${month}-01`);
+    var splitMonth = month.split("-");
+    const initialDate = new Date(`${splitMonth[0]}-${splitMonth[1]}-01`);
     const finalDate = new Date(getLastDayOfMonth(month));
     finalDate.setUTCHours(23, 59, 59, 999);
 
@@ -63,7 +70,18 @@ const list = async (user_id, monthList) => {
       },
     });
 
-    output[month] = all_transation;
+    var list = {};
+    if (all_transation) {
+      for (var i in all_transation) {
+        if (!list[all_transation[i].date]) {
+          list[all_transation[i].date] = [];
+        }
+
+        list[all_transation[i].date].push(all_transation[i]);
+      }
+    }
+
+    output[`${splitMonth[0]}-${splitMonth[1]}`] = list;
   }
 
   return output;
@@ -116,7 +134,11 @@ const update = async (
     updateData.name = name;
   }
 
-  if (category_id && transaction.category_id !== category_id) {
+  if (category_id === "") {
+    category_id = null;
+  }
+
+  if (transaction.category_id !== category_id) {
     updateData.category_id = category_id;
   }
 
@@ -202,11 +224,17 @@ const removeFromUser = async (user_id) => {
 };
 
 const getBalance = async (user_id) => {
-  return await Balance.findOne({
+  const balance = await Balance.findOne({
     where: {
       user_id,
     },
   });
+
+  if (balance) {
+    return balance.value;
+  } else {
+    return 0;
+  }
 };
 
 module.exports = {

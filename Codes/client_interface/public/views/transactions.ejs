@@ -1,16 +1,141 @@
 <div class="bg-white border rounded p-4">
   <div class="d-flex align-items-center justify-content-between">
     <h5 class="text-bold mb-0"><%-page.i18n.transactions%></h5>
-    <div class="div-transactions-date">
-      <input type="hidden" id="filter-transactions-date" />
+    <div>
+      <button data-type="O" class="btn btn-danger btn-add-transaction">
+        <span class="sap-icons me-1">&#xe069;</span>
+        <%-page.i18n.expenses%>
+      </button>
+      <button data-type="I" class="btn btn-success btn-add-transaction">
+        <span class="sap-icons me-1">&#xe058;</span>
+        <%-page.i18n.revenues%>
+      </button>
+    </div>
+  </div>
+  <div class="d-flex flex-column align-items-center justify-content-center mt-4">
+    <div class="div-transaction-date">
+      <input type="hidden" id="filter-transaction-date" />
       <button class="btn btn-change-date" data-type="previous">
         <span class="sap-icons">&#xe1eb;</span>
       </button>
-      <div class="mb-0" id="transactions-date"></div>
+      <div class="mb-0" id="transaction-date"></div>
       <button class="btn btn-change-date" data-type="next">
         <span class="sap-icons">&#xe066;</span>
       </button>
     </div>
+    <input type="text" placeholder="<%-page.i18n.search%>" id="input-search" />
   </div>
-  <div class="mt-4" id="div-transactions-result"></div>
+  <div class="mt-4" id="div-transaction-result"></div>
+</div>
+
+<div
+  class="modal fade"
+  id="modal-transactions"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modal-transactions-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-transactions-label">
+          <span class="sap-icons">&#xe117;</span>
+          <%-page.i18n.transaction%>
+        </div>
+        <button
+          type="button"
+          class="btn-close small"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="form-transactions" class="row g-3">
+          <div class="col-12">
+            <label for="form-transactions[type]" class="required">
+              <%-page.i18n.type%>
+            </label>
+            <select name="type" id="form-transactions[type]" class="form-select">
+              <option value="O"><%-page.i18n.expenses%></option>
+              <option value="I"><%-page.i18n.revenues%></option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label for="form-transactions[description]" class="required">
+              <%-page.i18n.description%>
+            </label>
+            <input
+              type="text"
+              id="form-transactions[description]"
+              name="name"
+              class="form-control"
+            />
+          </div>
+          <div class="col-6">
+            <label for="form-transactions[value]" class="required">
+              <%-page.i18n.value%>
+            </label>
+            <input type="hidden" id="form-transactions[value]" name="value" />
+            <input
+              type="text"
+              id="form-transactions[value_string]"
+              class="form-control mask-money"
+            />
+          </div>
+          <div class="col-6">
+            <label for="form-transactions[date_strinf]" class="required">
+              <%-page.i18n.date%>
+            </label>
+            <input type="hidden" id="form-transactions[date]" name="date" />
+            <input
+              type="text"
+              id="form-transactions[date_string]"
+              class="form-control mask-date"
+            />
+          </div>
+          <div class="col-6">
+            <label for="form-transactions[category]"><%-page.i18n.category%></label>
+            <select
+              name="category_id"
+              id="form-transactions[category]"
+              class="form-select"
+            >
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label
+              for="form-transactions[status]"
+              id="form-transactions-status-label"
+              class="required"
+            ></label>
+            <select name="status" id="form-transactions[status]" class="form-select">
+              <option value="0"><%-page.i18n.no%></option>
+              <option value="1"><%-page.i18n.yes%></option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <span class="sap-icons">&#xe03e;</span>
+          <%- page.i18n.cancel_text %>
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger d-none"
+          id="btn-remove-transaction"
+        >
+          <span class="sap-icons">&#xe03d;</span>
+          <%-page.i18n.remove_button%>
+        </button>
+        <button type="button" class="btn btn-success" id="btn-save-transaction">
+          <span class="sap-icons">&#xe09a;</span>
+          <%-page.i18n.save_button%>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

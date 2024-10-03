@@ -1,4 +1,5 @@
 var $category_list = JSON.parse(getCookie("moneezy_categories"));
+var $balance = getCookie("moneezy_balance");
 
 $(document).ready(function () {
   $(".btn-see-password").click(function () {
@@ -28,8 +29,10 @@ $(document).ready(function () {
 function initializeMasks() {
   if ($config.i18n_language == "pt-BR") {
     $(".mask-money").mask("#.##0,00", { reverse: true });
+    $(".mask-date").mask("00/00/0000");
   } else {
     $(".mask-money").mask("#,##0.00", { reverse: true });
+    $(".mask-date").mask("0000-00-00");
   }
 }
 
@@ -70,6 +73,10 @@ function dealLogout() {
       logout();
     }
   });
+}
+
+function removeAccents(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function getCookie(key) {
@@ -127,6 +134,8 @@ function clearCookies() {
   setCookie("moneezy_token", "");
   setCookie("moneezy_categories", "");
   setCookie("moneezy_budget", "");
+  setCookie("moneezy_transaction", "");
+  setCookie("moneezy_balance", "");
 }
 
 function formatCurrency(value) {
@@ -164,4 +173,39 @@ function parseCurrency(value) {
   }
 
   return Math.round(value * 100) / 100;
+}
+
+function parseDate(date) {
+  if ($config.i18n_language == "pt-BR") {
+    var dateArr = date.split("/");
+    date = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]}`;
+  }
+
+  return date;
+}
+
+function getDayOfWeek(dateString) {
+  const date = new Date(dateString);
+  const dayOfWeek = new Intl.DateTimeFormat($config.i18n_language, {
+    weekday: "long",
+  }).format(date);
+  return dayOfWeek;
+}
+
+function getCategotyInfo(type, id) {
+  for (var i in $category_list[type]) {
+    if ($category_list[type][i].category_id == id) {
+      return {
+        icon: $category_list[type][i].icon,
+        color: $category_list[type][i].color,
+        name: $category_list[type][i].name,
+      };
+    }
+  }
+
+  return {
+    icon: "xe1af",
+    color: "#4E4E4E",
+    name: $i18n.others,
+  };
 }

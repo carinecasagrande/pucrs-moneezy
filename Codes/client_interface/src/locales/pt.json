@@ -6,6 +6,8 @@
   "swal_logout_text": "Tem certeza que deseja sair?",
   "dashboard": "Visão Geral",
   "transactions": "Lançamentos",
+  "transaction": "Lançamento",
+  "search": "Buscar",
   "budget": "Orçamento",
   "report": "Relatório",
   "expenses": "Despesas",
@@ -57,5 +59,17 @@
   "budget_field": "Valor do Orçamento",
   "swal_remove_budget_text": "Tem certeza que deseja remover o orçamento para esta categoria?",
   "token_not_provided": "Token não fornecido.",
-  "resource_not_found": "Recurso não encontrado."
+  "resource_not_found": "Recurso não encontrado.",
+  "description": "Descrição",
+  "value": "Valor",
+  "type": "Tipo",
+  "date": "Data",
+  "no": "Não",
+  "yes": "Sim",
+  "expense_status": "Pago",
+  "revenue_status": "Recebido",
+  "others": "others",
+  "transaction_not_found": "Lançamento não encontrado.",
+  "refresh_page": "Atualize a página e tente novamente.",
+  "swal_remove_transaction_text": "Tem certeza que deseja remover este lançamento? Esta ação não poderá ser desfeita."
 }

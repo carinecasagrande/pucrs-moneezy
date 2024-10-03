@@ -7,5 +7,6 @@
 	"delete_success": "delete_success",
 	"delete_all_success": "delete_all_success",
 	"update_success": "update_success",
-	"update_error": "update_error"
+	"update_error": "update_error",
+	"name_required": "name_required"
 }
