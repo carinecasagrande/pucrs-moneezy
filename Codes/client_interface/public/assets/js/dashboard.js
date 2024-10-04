@@ -7,10 +7,14 @@ const splitDate = formattedDate.split("-");
 const transactionDate = `${splitDate[0]}-${splitDate[1]}`;
 
 $(document).ready(function () {
-  loadDashboardResume();
-  var costByCategoryObj = getValueExpenseByCategoryAndMonth(transactionDate);
-  buildChartExpensesCategory(costByCategoryObj);
-  buildChartExpensesBudget(costByCategoryObj);
+  loadBudget(formattedDate, function () {
+    loadTransaction(formattedDate, function () {
+      loadDashboardResume();
+      var costByCategoryObj = getValueExpenseByCategoryAndMonth(transactionDate);
+      buildChartExpensesCategory(costByCategoryObj);
+      buildChartExpensesBudget(costByCategoryObj);
+    });
+  });
 });
 
 var chartExpensesBudget = null;
