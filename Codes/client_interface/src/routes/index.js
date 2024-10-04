@@ -69,6 +69,10 @@ router.get(
 
 router.get("/dashboard", privateMiddleware, (req, res) => {
   const page = getPageConfig(req.user);
+  page.js.push("/node_modules/chart.js/dist/chart.umd.js");
+  page.css.push("/css/dashboard.css");
+  page.js.push("/js/dashboard.js");
+
   res.render("dashboard", {
     current_page: "dashboard",
     page,

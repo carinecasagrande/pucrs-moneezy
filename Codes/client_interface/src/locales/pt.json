@@ -75,5 +75,11 @@
   "budgeted": "Orçado",
   "realized": "Realizado",
   "pending": "Pendente",
-  "total": "Total"
+  "total": "Total",
+  "resume": "Resumo",
+  "balance": "Saldo",
+  "quick_action": "Ações Rápidas",
+  "accounts_payable": "Contas à Pagar",
+  "biggest_expenses": "Maiores Despesas",
+  "accounts_receivable": "Contas à Receber"
 }

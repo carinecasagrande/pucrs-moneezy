@@ -6,8 +6,6 @@ const transactionService = require("../services/transactionService");
 
 router.post("/create", authMiddleware, async (req, res) => {
   try {
-    console.log(req.body);
-
     const response = await transactionService.post("/create", req.body, {
       headers: {
         "Accept-Language": i18n.getLocale(),

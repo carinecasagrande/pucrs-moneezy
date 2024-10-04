@@ -35,9 +35,160 @@ $(document).ready(function () {
     dealConfigureAjaxAfterComplete(jqxhr, settings);
   });
 
+  $(document).on("click", "#btn-save-transaction", function () {
+    dealSaveTransaction();
+  });
+
+  $(document).on("change", "#form-transactions\\[value_string\\]", function () {
+    var value = $(this).val();
+    $("#form-transactions\\[value\\]").val(parseCurrency(value));
+  });
+
+  $(document).on("change", "#form-transactions\\[date_string\\]", function () {
+    var date = $(this).val();
+    $("#form-transactions\\[date\\]").val(parseDate(date));
+  });
+
+  $(document).on("change", "#form-transactions\\[type\\]", function () {
+    var type = $(this).val();
+    dealChangeType(type);
+  });
+
+  $(document).on("click", ".btn-add-transaction", function () {
+    resetTransactionForm();
+    $("#form-transactions\\[type\\]").val($(this).attr("data-type")).change();
+    $("#modal-transactions").modal("show");
+  });
+
   initializeLoadingOverlay();
   initializeMasks();
 });
+
+function isValidTransaction() {
+  var valid = true;
+
+  if (["I", "O"].indexOf($("#form-transactions\\[type\\]").val()) == -1) {
+    valid = false;
+    new Notify({
+      title: $i18n.type,
+      text: $i18n.field_required,
+      status: "error",
+    });
+  }
+
+  if ($("#form-transactions\\[description\\]").val().trim() == "") {
+    valid = false;
+    new Notify({
+      title: $i18n.description,
+      text: $i18n.field_required,
+      status: "error",
+    });
+  }
+
+  if ($("#form-transactions\\[value_string\\]").val() == "") {
+    valid = false;
+    new Notify({
+      title: $i18n.value,
+      text: $i18n.field_required,
+      status: "error",
+    });
+  } else {
+    var value = parseCurrency($("#form-transactions\\[value_string\\]").val());
+    if (value <= 0) {
+      valid = false;
+      new Notify({
+        title: $i18n.value,
+        text: $i18n.field_required,
+        status: "error",
+      });
+    }
+  }
+
+  if ($("#form-transactions\\[date\\]").val() == "") {
+    valid = false;
+    new Notify({
+      title: $i18n.date,
+      text: $i18n.field_required,
+      status: "error",
+    });
+  }
+
+  if (["0", "1"].indexOf($("#form-transactions\\[status\\]").val()) == -1) {
+    valid = false;
+    new Notify({
+      title: $("#form-transactions-status-label").text(),
+      text: $i18n.field_required,
+      status: "error",
+    });
+  }
+
+  return valid;
+}
+
+var $editTransactionId = null;
+function saveTransaction() {
+  var url = `${$config.endpoind_api_gateway}/api/transaction/create`;
+  var method = "POST";
+  if ($editTransactionId != null) {
+    url = `${$config.endpoind_api_gateway}/api/transaction/update/${$editTransactionId}`;
+    method = "PUT";
+  }
+
+  $.ajax({
+    url,
+    data: $("#form-transactions").serialize(),
+    headers: {
+      "Accept-Language": $config.locale,
+      Authorization: `Bearer ${getCookie("moneezy_token")}`,
+    },
+    method,
+    complete: function (result) {
+      if (result.status == 200) {
+        $("#modal-transactions").modal("hide");
+        setTransactionList(
+          result.responseJSON.transaction_list,
+          result.responseJSON.balance
+        );
+
+        if (typeof showTransaction == "function") {
+          showTransaction($("#filter-transaction-date").val());
+        }
+
+        if (typeof loadDashboardResume == "function") {
+          loadDashboardResume();
+        }
+      }
+    },
+  });
+}
+
+function dealChangeType(type) {
+  var status = type == "I" ? $i18n.revenue_status : $i18n.expense_status;
+  $("#form-transactions-status-label").text(`${status}?`);
+
+  var html = `<option value=""></option>`;
+  for (var i in $category_list[type]) {
+    html += `<option value="${$category_list[type][i].category_id}">${$category_list[type][i].name}</option>`;
+  }
+  $("#form-transactions\\[category\\]").html(html);
+}
+
+function resetTransactionForm() {
+  $("#form-transactions\\[description\\]").val("");
+  $("#form-transactions\\[value_string\\]").val("");
+  $("#form-transactions\\[value\\]").val("");
+  $("#form-transactions\\[date_string\\]").val("");
+  $("#form-transactions\\[date\\]").val("");
+  $("#form-transactions\\[status\\]").val("0");
+  $("#btn-remove-transaction").addClass("d-none");
+  $editTransactionId = null;
+}
+
+function dealSaveTransaction() {
+  if (isValidTransaction()) {
+    saveTransaction();
+  }
+}
 
 function getValueExpenseByCategoryAndMonth(date) {
   var splitDate = date.split("-");
@@ -143,6 +294,12 @@ function initializeMasks() {
     $(".mask-money").mask("#,##0.00", { reverse: true });
     $(".mask-date").mask("0000-00-00");
   }
+
+  $(".mask-date").datepicker({
+    autoPick: true,
+    autoHide: true,
+    language: $config.i18n_language,
+  });
 }
 
 function dealConfigureAjaxBeforeSend() {

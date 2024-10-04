@@ -1,1 +1,65 @@
-dashboard
+<div class="row g-4">
+  <div class="col-8">
+    <div class="bg-white border rounded p-4 py-5 h-100 d-flex flex-column">
+      <h5 class=" mb-4 text-center text-muted"><%-page.i18n.resume%></h5>
+      <div class="row text-center flex-grow-1">
+        <div class="col d-flex align-items-center justify-content-center flex-column">
+          <p class="mb-1"> <%-page.i18n.revenues%></p>
+          <h4 id="dashboard-revenues" class="text-bold text-success"></p>
+        </div>
+        <div class="col d-flex align-items-center justify-content-center flex-column">
+          <p class="mb-1"><%-page.i18n.expenses%></p>
+          <h4 id="dashboard-expenses" class="text-bold text-danger"></p>
+        </div>
+        <div class="col d-flex align-items-center justify-content-center flex-column">
+          <p class="mb-1"><%-page.i18n.balance%></p>
+          <h4 id="dashboard-balance" class="text-bold"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="bg-white border rounded p-4 py-5 h-100">
+      <h5 class=" mb-4 text-center text-muted"><%-page.i18n.quick_action%></h5>
+      <div class="add-transaction">
+        <div data-type="O" class="text-danger btn-add-transaction">
+          <span class="sap-icons me-1">&#xe1f6;</span>
+          <p><%-page.i18n.expenses%></p>
+        </div>
+        <div data-type="I" class="text-success btn-add-transaction">
+          <span class="sap-icons me-1">&#xe1f7;</span>
+          <p><%-page.i18n.revenues%></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-8">
+    <div class="bg-white border rounded p-4 py-5  mb-4">
+      <h5 class="mb-4 text-center text-muted"><%-page.i18n.accounts_payable%></h5>
+      <div id="accounts-payable"></div>
+    </div>
+    <div class="bg-white border rounded p-4 py-5">
+      <h5 class=" mb-4 text-center text-muted"><%-page.i18n.accounts_receivable%></h5>
+      <div id="accounts-receivable"></div>
+    </div>
+  </div>
+  <div class="col-4 ">
+    <div class="bg-white border rounded p-4 py-5 h-100 mb-4">
+      <h5 class="mb-4 text-center text-muted"><%-page.i18n.biggest_expenses%></h5>
+      <canvas id="chart-expenses-category"></canvas>
+    </div>
+    
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="bg-white border rounded p-4 py-5  mb-4">
+      <h5 class=" mb-4 text-center text-muted"><%-page.i18n.budgeted%> x <%-page.i18n.realized%></h5>
+      <canvas id="chart-expenses-budget"></canvas>
+    </div>
+  </div>
+</div>

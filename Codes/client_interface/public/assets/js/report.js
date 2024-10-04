@@ -183,7 +183,7 @@ function buildChartExpensesCategory(costByCategoryObj) {
       plugins: {
         title: {
           display: true,
-          text: `${$i18n.expenses} x ${$i18n.revenues}`,
+          text: `${$i18n.categories}`,
           font: {
             size: 16,
             family: "Poppins",
@@ -215,7 +215,6 @@ function buildChartExpensesCategory(costByCategoryObj) {
 var chartExpensesBudget = null;
 function buildChartExpensesBudget(costByCategoryObj, date) {
   var budgetByCategory = $budget_list[date];
-  console.log(costByCategoryObj);
 
   var labels = [];
   var budgetData = [];
@@ -240,19 +239,6 @@ function buildChartExpensesBudget(costByCategoryObj, date) {
       pendingData.push(0);
     }
   }
-
-  console.log(labels);
-
-  // var label = [];
-  // var color = [];
-  // var border = [];
-  // for (var i in costByCategoryObj) {
-  // var category = getCategotyInfo("O", i);
-  // data.push(costByCategoryObj[i].total);
-  // label.push(category.name);
-  // color.push(category.color + "c7");
-  // border.push(category.color);
-  // }
 
   if (chartExpensesBudget != null) {
     chartExpensesBudget.destroy();
@@ -333,7 +319,6 @@ function buildChartExpensesBudget(costByCategoryObj, date) {
       responsive: true,
       maintainaspectratio: false,
       indexAxis: "y",
-      // barThickness: 30,
       scales: {
         x: {
           stacked: true,
@@ -345,9 +330,6 @@ function buildChartExpensesBudget(costByCategoryObj, date) {
         },
         y: {
           stacked: true,
-          // ticks: {
-          //   padding: 10, // Espaçamento entre as barras
-          // },
         },
       },
     },

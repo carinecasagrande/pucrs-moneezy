@@ -11,33 +11,8 @@ $(document).ready(function () {
     dealEditTransaction(month, date, id);
   });
 
-  $(document).on("click", "#btn-save-transaction", function () {
-    dealSaveTransaction();
-  });
-
   $(document).on("click", "#btn-remove-transaction", function () {
     dealRemoveTransaction();
-  });
-
-  $(document).on("change", "#form-transactions\\[value_string\\]", function () {
-    var value = $(this).val();
-    $("#form-transactions\\[value\\]").val(parseCurrency(value));
-  });
-
-  $(document).on("change", "#form-transactions\\[date_string\\]", function () {
-    var date = $(this).val();
-    $("#form-transactions\\[date\\]").val(parseDate(date));
-  });
-
-  $(document).on("change", "#form-transactions\\[type\\]", function () {
-    var type = $(this).val();
-    dealChangeType(type);
-  });
-
-  $(document).on("click", ".btn-add-transaction", function () {
-    resetTransactionForm();
-    $("#form-transactions\\[type\\]").val($(this).attr("data-type")).change();
-    $("#modal-transactions").modal("show");
   });
 
   $("#input-search").on("input", function () {
@@ -90,7 +65,7 @@ function dealRemoveTransaction() {
 function removeTransaction() {
   const date = $("#form-transactions\\[date\\]").val();
   $.ajax({
-    url: `${$config.endpoind_api_gateway}/api/transaction/delete/${date}/${$editId}`,
+    url: `${$config.endpoind_api_gateway}/api/transaction/delete/${date}/${$editTransactionId}`,
     headers: {
       "Accept-Language": $config.locale,
       Authorization: `Bearer ${getCookie("moneezy_token")}`,
@@ -123,7 +98,7 @@ function dealEditTransaction(month, date, id) {
   if (elem != null) {
     resetTransactionForm();
     $("#btn-remove-transaction").removeClass("d-none");
-    $editId = elem.transaction_id;
+    $editTransactionId = elem.transaction_id;
     var splitDate = elem.date.split("-");
 
     $("#form-transactions\\[type\\]").val(elem.type).change();
@@ -144,97 +119,6 @@ function dealEditTransaction(month, date, id) {
       status: "error",
     });
   }
-}
-
-function isValidTransaction() {
-  var valid = true;
-
-  if (["I", "O"].indexOf($("#form-transactions\\[type\\]").val()) == -1) {
-    valid = false;
-    new Notify({
-      title: $i18n.type,
-      text: $i18n.field_required,
-      status: "error",
-    });
-  }
-
-  if ($("#form-transactions\\[description\\]").val().trim() == "") {
-    valid = false;
-    new Notify({
-      title: $i18n.description,
-      text: $i18n.field_required,
-      status: "error",
-    });
-  }
-
-  if ($("#form-transactions\\[value_string\\]").val() == "") {
-    valid = false;
-    new Notify({
-      title: $i18n.value,
-      text: $i18n.field_required,
-      status: "error",
-    });
-  } else {
-    var value = parseCurrency($("#form-transactions\\[value_string\\]").val());
-    if (value <= 0) {
-      valid = false;
-      new Notify({
-        title: $i18n.value,
-        text: $i18n.field_required,
-        status: "error",
-      });
-    }
-  }
-
-  if ($("#form-transactions\\[date\\]").val() == "") {
-    valid = false;
-    new Notify({
-      title: $i18n.date,
-      text: $i18n.field_required,
-      status: "error",
-    });
-  }
-
-  if (["0", "1"].indexOf($("#form-transactions\\[status\\]").val()) == -1) {
-    valid = false;
-    new Notify({
-      title: $("#form-transactions-status-label").text(),
-      text: $i18n.field_required,
-      status: "error",
-    });
-  }
-
-  return valid;
-}
-
-var $editId = null;
-function saveTransaction() {
-  var url = `${$config.endpoind_api_gateway}/api/transaction/create`;
-  var method = "POST";
-  if ($editId != null) {
-    url = `${$config.endpoind_api_gateway}/api/transaction/update/${$editId}`;
-    method = "PUT";
-  }
-
-  $.ajax({
-    url,
-    data: $("#form-transactions").serialize(),
-    headers: {
-      "Accept-Language": $config.locale,
-      Authorization: `Bearer ${getCookie("moneezy_token")}`,
-    },
-    method,
-    complete: function (result) {
-      if (result.status == 200) {
-        $("#modal-transactions").modal("hide");
-        setTransactionList(
-          result.responseJSON.transaction_list,
-          result.responseJSON.balance
-        );
-        showTransaction($("#filter-transaction-date").val());
-      }
-    },
-  });
 }
 
 function showTransaction(date) {
@@ -327,34 +211,6 @@ function showTransaction(date) {
   $("#div-transaction-result").html(html);
 }
 
-function dealChangeType(type) {
-  var status = type == "I" ? $i18n.revenue_status : $i18n.expense_status;
-  $("#form-transactions-status-label").text(`${status}?`);
-
-  var html = `<option value=""></option>`;
-  for (var i in $category_list[type]) {
-    html += `<option value="${$category_list[type][i].category_id}">${$category_list[type][i].name}</option>`;
-  }
-  $("#form-transactions\\[category\\]").html(html);
-}
-
-function resetTransactionForm() {
-  $("#form-transactions\\[description\\]").val("");
-  $("#form-transactions\\[value_string\\]").val("");
-  $("#form-transactions\\[value\\]").val("");
-  $("#form-transactions\\[date_string\\]").val("");
-  $("#form-transactions\\[date\\]").val("");
-  $("#form-transactions\\[status\\]").val("0");
-  $("#btn-remove-transaction").addClass("d-none");
-  $editId = null;
-}
-
-function dealSaveTransaction() {
-  if (isValidTransaction()) {
-    saveTransaction();
-  }
-}
-
 function dealChangeDate(type) {
   var [year, month, day] = $("#filter-transaction-date")
     .val()
@@ -427,11 +283,5 @@ function initializeDatepicker() {
       $("#filter-transaction-date").val(date);
       dealLoadTransaction(date);
     },
-  });
-
-  $(".mask-date").datepicker({
-    autoPick: true,
-    autoHide: true,
-    language: $config.i18n_language,
   });
 }
