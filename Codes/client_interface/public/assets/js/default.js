@@ -73,8 +73,8 @@ function calcPercent(valueBase, value) {
   return (value * 100) / valueBase;
 }
 
-function loadTransaction(date, callback = null) {
-  return $.ajax({
+function loadTransaction(date, callback) {
+  $.ajax({
     url: `${$config.endpoind_api_gateway}/api/transaction/list/${date}`,
     headers: {
       "Accept-Language": $config.locale,
@@ -88,9 +88,7 @@ function loadTransaction(date, callback = null) {
           result.responseJSON.balance
         );
 
-        if (callback != null) {
-          callback();
-        }
+        callback();
       }
     },
   });
@@ -111,7 +109,7 @@ function setTransactionList(list, balance) {
   setCookie("moneezy_balance", JSON.stringify($balance));
 }
 
-function loadBudget(date) {
+function loadBudget(date, callback) {
   $.ajax({
     url: `${$config.endpoind_api_gateway}/api/budget/list/${date}`,
     headers: {
@@ -122,6 +120,7 @@ function loadBudget(date) {
     complete: function (result) {
       if (result.status == 200) {
         setBudgetList(date, result.responseJSON.budget_list);
+        callback();
       }
     },
   });

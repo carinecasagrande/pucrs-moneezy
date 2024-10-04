@@ -240,9 +240,14 @@ function saveTransaction() {
 function showTransaction(date) {
   var splitDate = date.split("-");
   date = `${splitDate[0]}-${splitDate[1]}`;
+
   const list = $transaction_list[date];
 
-  const keys = Object.keys(list);
+  var keys = [];
+  if (list) {
+    keys = Object.keys(list);
+  }
+
   var html = ``;
   if (keys.length > 0) {
     for (let i = keys.length - 1; i >= 0; i--) {
@@ -377,20 +382,25 @@ function dealChangeDate(type) {
 }
 
 function dealLoadTransaction(date) {
+  var splitDate = date.split("-");
+  date = `${splitDate[0]}-${splitDate[1]}`;
+
   if ($transaction_list) {
     if (typeof $transaction_list == "string") {
       $transaction_list = JSON.parse($transaction_list);
     }
 
     if ($transaction_list[date] == undefined) {
-      loadTransaction(date);
-      showTransaction(date);
+      loadTransaction(date, function () {
+        showTransaction(date);
+      });
     } else {
       showTransaction(date);
     }
   } else {
-    loadTransaction(date);
-    showTransaction(date);
+    loadTransaction(date, function () {
+      showTransaction(date);
+    });
   }
 }
 

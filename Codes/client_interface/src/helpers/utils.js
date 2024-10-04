@@ -67,4 +67,37 @@ const iconList = [
   "xe12c",
 ];
 
-module.exports = { colorList, iconList };
+function getFirstDaysOfMonths() {
+  const result = [];
+
+  // Data atual
+  const currentDate = new Date();
+
+  // Primeiro dia do mês atual
+  const firstDayCurrent = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
+  result.push(firstDayCurrent.toISOString().split("T")[0]);
+
+  // Primeiro dia do mês anterior
+  const firstDayPrevious = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() - 1,
+    1
+  );
+  result.unshift(firstDayPrevious.toISOString().split("T")[0]); // Adiciona no início do array
+
+  // Primeiro dia do próximo mês
+  const firstDayNext = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    1
+  );
+  result.push(firstDayNext.toISOString().split("T")[0]);
+
+  return result;
+}
+
+module.exports = { colorList, iconList, getFirstDaysOfMonths };

@@ -104,6 +104,11 @@ router.get("/budget", privateMiddleware, async (req, res) => {
 
 router.get("/report", privateMiddleware, (req, res) => {
   const page = getPageConfig(req.user);
+  page.css.push("/css/report.css");
+  page.js.push("/node_modules/chart.js/dist/chart.umd.js");
+  page.js.push("/js/report.js");
+  page.config.title = `${config.system.name} - ${page.i18n.report}`;
+
   res.render("report", {
     current_page: "report",
     page,

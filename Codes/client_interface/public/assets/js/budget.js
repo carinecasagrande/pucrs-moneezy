@@ -154,14 +154,16 @@ function dealLoadBudget(date) {
     }
 
     if ($budget_list[date] == undefined) {
-      loadBudget(date);
-      dealShowBudget(date);
+      loadBudget(date, function () {
+        dealShowBudget(date);
+      });
     } else {
       dealShowBudget(date);
     }
   } else {
-    loadBudget(date);
-    dealShowBudget(date);
+    loadBudget(date, function () {
+      dealShowBudget(date);
+    });
   }
 }
 
